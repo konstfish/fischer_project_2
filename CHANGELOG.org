@@ -1,0 +1,13 @@
+* Changelog
+
+** [Unreleased]
+*** Added
+- Create repository
+
+** [0.0.1] - 2020-02-11
+*** Added
+- Include ASIO Library in main.cpp
+- Fill .gitignore
+- Add simple interfacing with local POP3 server to main.cpp
+- Create RESEARCH.md to temporarily document sources
+- Create empty doc file

@@ -1,5 +1,5 @@
 # uncomment as necessary
-project('PROJNAME', 'cpp',
+project('bubble', 'cpp',
         license : ['Boost'],
         version : '0.1',
         default_options : ['cpp_std=c++17', 'warning_level=3', 'werror=true'])
@@ -38,11 +38,18 @@ add_global_arguments('-I' + get_option('spdlog_include_dir'), language : 'cpp')
 
 # subdir('SUBDIR1')
 
-inc_dir = include_directories('include')
+inc_dir = include_directories(['include',
+#                               get_option('cli11_include_dir'),
+#                               get_option('spdlog_include_dir'),
+#                               get_option('json_include_dir'),
+                               get_option('asio_include_dir')                           
+                              ])
+
+
 src = ['src/main.cpp']
 #protobuf: src = ['src/main.cpp', generated]
 
-executable('EXENAME',
+executable('bubble',
            sources : src,
            include_directories : inc_dir,
 #           dependencies : [thread_dep, protobuf_dep]
