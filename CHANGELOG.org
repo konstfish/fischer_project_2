@@ -1,9 +1,11 @@
 * Changelog
-
 ** [Unreleased]
 *** Added
 - Create repository
-
+** [0.0.2] - 2020-02-22
+*** Changed
+- Rewrote Socket to feature a resolver
+- Made basic changes to prepare TLS sockets
 ** [0.0.1] - 2020-02-11
 *** Added
 - Include ASIO Library in main.cpp

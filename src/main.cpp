@@ -1,5 +1,6 @@
 #include <iostream>
 
+//#include <asio/ssl.hpp>
 #include <asio.hpp>
 
 using namespace asio::ip;
@@ -9,13 +10,31 @@ using namespace std;
 // testdaten: user@nvs.com : 12345678
 
 int main() {
-    string port{"110"};
 
-    tcp::iostream strm{"10.0.1.5", port};
+
+    string port{"110"};
+    string port_tls{"995"};
+    string host{"fortimail.konst.fish"};
 
     string end_signal = ".\r";
 
-    if(strm) {
+    //tcp::iostream strm{"10.0.1.5", port};
+
+    asio::io_context ctx; 
+    tcp::resolver resolver{ctx};
+    //asio::ssl::context ssl_ctx(asio::ssl::context::tlsv12);
+
+    try {
+        auto results = resolver.resolve(host, port);
+        tcp::socket sock{ctx}; // IO object
+
+        //asio::ssl::stream<asio::ip::tcp::socket> sock(ctx, ssl_ctx);
+
+
+        asio::connect(sock, results); //→ function! cout << ”connected” << endl;
+        tcp::iostream strm{std::move(sock)};
+
+        if(strm) {
         try {
             string data;
             getline(strm, data);
@@ -71,6 +90,12 @@ int main() {
     } else { 
         cout << "could not connect" << endl;
     }
+
+    } catch(...){
+        cout << "test" << endl;
+    }
+
+    
 
     return 0;
 }
