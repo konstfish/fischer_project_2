@@ -1,1 +1,123 @@
-% temp
+\documentclass[12pt, letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{cite}
+\usepackage{float}
+\usepackage{tikz}
+\usepackage{hyperref}
+\usepackage[newfloat]{minted}
+\usepackage{caption}
+\usepackage{dirtree}
+\tolerance=1
+\emergencystretch=\maxdimen
+\hyphenpenalty=10000
+\hbadness=10000
+
+\newenvironment{code}{\captionsetup{type=listing}}{}
+\SetupFloatingEnvironment{listing}{name=Source Code}
+
+\graphicspath{{images/}}
+
+\title{Simpler POP3 Client mit TLS Support}
+\author{David Fischer, 5CHIF}
+\date{April 2021}
+
+\begin{document}
+
+\begin{titlepage}
+\maketitle
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+\section{Einleitung}
+
+\subsection{Problematik}
+
+
+\section{Implementierung}
+
+\subsection{Kurze Beschreibung diverser Codeblöcke}
+
+
+\begin{code}
+\begin{minted}{cpp}
+// create vector of threads to store the nodes operator()() threads
+vector<thread> node_container;
+node_container.resize(no_of_nodes);
+
+for (int cnt = 0; cnt < no_of_nodes; cnt++) {
+    Node tmp_node(cnt, ref(coord), opt);
+    node_container.at(cnt) = thread{tmp_node};
+}
+
+// join threads from node_container
+for( auto &t : node_container ) {
+    t.join();
+}
+\end{minted}
+\caption{Erstellen sowie Befüllen des node\_container Vectors.}
+\label{thread_vector_ref}
+\end{code}
+
+
+\subsection{Externe Bibliotheken}
+\label{extBib}
+
+\subsubsection{CLI11}
+CLI11\cite{cli11_ref} ermöglicht eine einfache Verarbeitung von Kommandozeilenargumenten mit eingebauten Methoden zum Überprüfen der angegebenen Werte. Auf diese Argumente wird in Sektion \ref{usage} näher eingegangen.
+
+\subsubsection{tabulate}
+Sobald das Programm vom Nutzer mittels $Ctrl+C$ abgebrochen wird, wird eine Tabelle mittels tabulate\cite{tabulate-ref} erstellt. Diese enthält diverse Informationen die während der Programmlaufzeit gesammelt wurden.
+Wenn die httplib Flag gesetzt ist, kann auf die Tabelle, wie in Paragraph \ref{get_ref} erwähnt, jederzeit zugegriffen werden.
+
+\section{Verwendung}
+\label{usage}
+
+\subsection{Kommandozeilenargumente}
+\subsubsection{Erforderlich}
+
+\paragraph{number}
+Nummer an Workerthread, die erstellt werden soll. Standardmäßig limitiert auf 2 bis 200. Sollte die -r Flagge gesetzt sein, ist die Limitation von 2 auf 10 reduziert.
+
+\subsubsection{Optional}
+\paragraph{-o, --outage-simulation}
+Lässt Workerthreads mit einer 3 \% Chance pro Eintritt in den kritischen Abschnitt ausfallen, um einen Deadlock zu erzeugen. 
+
+\paragraph{-d, --outage-detection}
+Nur zulässig, wenn --outage-simulation auch gesetzt ist. Lässt den Koordinator 8 Sekunden auf die Node warten. Wenn nach dieser Zeit keine REL Anfrage eingeht, wird die Node aus der Queue entfernt.
+
+\paragraph{-r, --requests}
+Lässt Kommunikation zwischen den Threads über HTTP laufen. Näher beschrieben in \ref{httplib_ref}.
+
+\newpage
+
+\section{Projektstruktur}
+\dirtree{%
+  .1 /.
+  .2 LICENSE.
+  .2 meson\_options.txt.
+  .2 meson.build.
+  .2 README.md.
+  .2 .gitignore.
+  .2 include.
+  .3 utils.h.
+  .3 Node.h.
+  .3 Coordinator.h.
+  .2 src.
+  .3 utils.cpp.
+  .3 Node.cpp.
+  .3 Coordinator.cpp.
+  .3 main.cpp.
+  .2 doc.
+  .3 ausarbeitung.tex.
+  .3 references.bib.
+  .3 ausarbeitung.pdf.
+  .2 build.
+}\hfill
+
+% .bib include & references
+\newpage
+\bibliography{references}
+\bibliographystyle{plain}
+\end{document}

@@ -2,9 +2,9 @@
 builddir
 .DS_Store
 ._*
-build/*
+build
 src_ext/
-
+dokumentation.bbl
 
 # Prerequisites
 *.d
