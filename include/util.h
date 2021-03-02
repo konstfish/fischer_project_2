@@ -10,12 +10,15 @@ catnr:  03
 #pragma once
 
 #include <iostream>
-
+#include <fstream>
+#include <string>
 class pop3client_utils{
     private:
-        int temp;
-    public:
-        pop3client_utils();
 
-        void email_to_file();
+    public:
+        pop3client_utils(){
+
+        };
+
+        int email_to_file(std::string write);
 };

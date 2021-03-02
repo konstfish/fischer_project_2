@@ -23,6 +23,8 @@ catnr:  03
 
 #include <gnutls/gnutls.h>
 
+#include "util.h"
+
 class pop3client{
     private:
         std::string end_signal = ".\r";
@@ -41,6 +43,8 @@ class pop3client{
         gnutls_certificate_credentials_t xcred;
         gnutls_session_t gnutls_sd;
 
+        pop3client_utils utility;
+
     public:
         pop3client(std::string hn, u_int16_t prt, bool tl) : hostname( hn ), port( prt ), tls( tl ){};
 
@@ -55,6 +59,7 @@ class pop3client{
         int resolve();
 
         void read();
+        std::string read_to_str();
         int write(std::string msg);
 
         int gnutls_setup();

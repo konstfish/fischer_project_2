@@ -50,6 +50,20 @@ void pop3client::read(){
     cout << rec;
 }
 
+std::string pop3client::read_to_str(){
+    char buff[8000]{};
+    memset(buff, 0, sizeof(buff));
+
+    if(tls){
+        gnutls_record_recv(gnutls_sd, buff, sizeof(buff) - 1);
+    }else{
+        recv(sd, buff, sizeof(buff) - 1, 0);
+    }
+
+    string rec = buff;
+    return rec;
+}
+
 // https://stackoverflow.com/questions/43264266/c-socket-send-and-connect
 int pop3client::write(std::string msg){
     msg = msg + "\n";
@@ -85,6 +99,9 @@ int pop3client::temp(){
     read();
     write("RETR 1");
     read();
+
+    write("RETR 1");
+    utility.email_to_file(read_to_str());
 
     return 0;
 }

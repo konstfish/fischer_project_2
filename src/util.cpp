@@ -11,4 +11,10 @@ catnr:  03
 
 using namespace std;
 
-void pop3client_utils::email_to_file();
+int pop3client_utils::email_to_file(std::string write){
+    ofstream fstr;
+    fstr.open ("temp.eml");
+    fstr << write;
+    fstr.close();
+    return 0;
+}
