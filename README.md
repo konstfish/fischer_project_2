@@ -7,4 +7,6 @@
 
 [![License](https://img.shields.io/badge/License-Boost%201.0-blue.svg)](https://www.boost.org/LICENSE_1_0.txt)
 
+[![time tracker](https://wakatime.com/badge/github/konstfish/fischer_project_2.svg)](https://wakatime.com/badge/github/konstfish/fischer_project_2)
+
 </div>

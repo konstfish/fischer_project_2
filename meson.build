@@ -2,7 +2,7 @@
 project('bubble', 'cpp',
         license : ['Boost'],
         version : '0.1',
-        default_options : ['cpp_std=c++17', 'warning_level=3', 'werror=true'])
+        default_options : ['cpp_std=c++17', 'warning_level=3', 'werror=false'])
 
 # thread_dep = dependency('threads')
 
@@ -10,6 +10,7 @@ project('bubble', 'cpp',
 add_global_arguments('-I' + get_option('asio_include_dir'), language : 'cpp')
 add_global_arguments('-DASIO_STANDALONE', language : 'cpp')
 add_global_arguments('-DASIO_NO_DEPRECATED', language : 'cpp')
+
 # end asio
 
 # CLI11: https://github.com/CLIUtils/CLI11
@@ -40,13 +41,13 @@ add_global_arguments('-I' + get_option('spdlog_include_dir'), language : 'cpp')
 
 inc_dir = include_directories(['include',
 #                               get_option('cli11_include_dir'),
-#                               get_option('spdlog_include_dir'),
+#                               get_option('subprocess_include_dir')
 #                               get_option('json_include_dir'),
                                get_option('asio_include_dir')                           
                               ])
 
 
-src = ['src/main.cpp']
+src = ['src/main.cpp', 'src/pop3client.cpp']
 #protobuf: src = ['src/main.cpp', generated]
 
 executable('bubble',

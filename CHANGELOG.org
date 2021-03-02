@@ -2,6 +2,12 @@
 ** [Unreleased]
 *** Added
 - Create repository
+** [0.0.3] - 2020-03-02
+*** Added
+- Add Time Tracking Badge to README
+*** Changed
+- Moved asio approach to backup folder
+- Made multiple attempts to work with subprocesses, to no proceeds
 ** [0.0.2] - 2020-02-22
 *** Changed
 - Rewrote Socket to feature a resolver
