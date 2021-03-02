@@ -13,7 +13,5 @@ using namespace std;
 
 int main() {
     pop3client c("fortimail.konst.fish", 110, false);
-    c.socket_setup();
-
-    cout << "test" << endl;
+    c.temp();
 }

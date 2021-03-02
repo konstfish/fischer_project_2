@@ -7,6 +7,7 @@
 *** Added
 - Add basic socket to pop3client Class
 - Add basic resolver to pop3client Class
+- Add read and write methods to pop3client Class
 *** Removed
 - Removed subprocess attempt
 ** [0.0.3] - 2020-03-02

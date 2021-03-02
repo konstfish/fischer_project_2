@@ -21,6 +21,9 @@ catnr:  03
 #include <unistd.h>
 #include <netdb.h>
 
+#include <gnutls/gnutls.h>
+#include <gnutls/gnutlsxx.h>
+#include <gnutls/x509.h>
 
 class pop3client{
     private:
@@ -43,8 +46,16 @@ class pop3client{
             socket_destruction();
         };
 
+        int temp();
+
         int socket_setup();
         int resolve();
 
+        void read();
+        int write(std::string msg);
+
+        int gnutls_setup();
+
+        void gnutls_destruction();
         void socket_destruction();
 };
