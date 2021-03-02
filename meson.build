@@ -4,7 +4,7 @@ project('bubble', 'cpp',
         version : '0.1',
         default_options : ['cpp_std=c++17', 'warning_level=3', 'werror=false'])
 
-# thread_dep = dependency('threads')
+gnutls_dep = dependency('gnutls')
 
 # begin asio: https://think-async.com/Asio/
 add_global_arguments('-I' + get_option('asio_include_dir'), language : 'cpp')
@@ -53,5 +53,5 @@ src = ['src/main.cpp', 'src/pop3client.cpp']
 executable('bubble',
            sources : src,
            include_directories : inc_dir,
-#           dependencies : [thread_dep, protobuf_dep]
+           dependencies : [gnutls_dep]
           )

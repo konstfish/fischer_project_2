@@ -22,8 +22,6 @@ catnr:  03
 #include <netdb.h>
 
 #include <gnutls/gnutls.h>
-#include <gnutls/gnutlsxx.h>
-#include <gnutls/x509.h>
 
 class pop3client{
     private:
@@ -39,11 +37,16 @@ class pop3client{
         int sd;
 
         bool tls;
+
+        gnutls_certificate_credentials_t xcred;
+        gnutls_session_t gnutls_sd;
+
     public:
         pop3client(std::string hn, u_int16_t prt, bool tl) : hostname( hn ), port( prt ), tls( tl ){};
 
         ~pop3client(){
             socket_destruction();
+            gnutls_destruction();
         };
 
         int temp();
