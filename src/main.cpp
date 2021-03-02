@@ -12,8 +12,8 @@ catnr:  03
 using namespace std;
 
 int main() {
-    pop3client c("fortimail.konst.fish", "110", false);
-    c.connect();
+    pop3client c("fortimail.konst.fish", 110, false);
+    c.socket_setup();
 
     cout << "test" << endl;
 }

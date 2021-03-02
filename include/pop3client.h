@@ -12,7 +12,14 @@ catnr:  03
 #include <iostream>
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <arpa/inet.h>
+#include <netinet/in.h>
 #include <unistd.h>
+#include <netdb.h>
 
 
 class pop3client{
@@ -20,11 +27,24 @@ class pop3client{
         std::string end_signal = ".\r";
 
         std::string hostname;
-        std::string port;
+        u_int16_t port;
+
+        std::string ipaddr;
+        int addrfamily;
+
+        struct sockaddr_in sa;
+        int sd;
+
         bool tls;
-
     public:
-        pop3client(std::string hn, std::string prt, bool tl) : hostname( hn ), port( prt ), tls( tl ){};
+        pop3client(std::string hn, u_int16_t prt, bool tl) : hostname( hn ), port( prt ), tls( tl ){};
 
-        void connect();
+        ~pop3client(){
+            socket_destruction();
+        };
+
+        int socket_setup();
+        int resolve();
+
+        void socket_destruction();
 };
