@@ -41,6 +41,8 @@ class pop3client{
 
         struct sockaddr_in sa;
         int sd;
+        
+        bool socket_established{false};
 
         bool tls;
 
@@ -49,17 +51,24 @@ class pop3client{
 
         pop3client_utils utility;
 
+        bool tls_established{false};
+
     public:
         pop3client(std::string hn, u_int16_t prt, bool tl) : hostname( hn ), port( prt ), tls( tl ){
-            spdlog::get("console")->info("test!");
+            spdlog::get("logger")->info("Connecting to {} on Port {}. TLS Enabled ({})", hn, prt, tl);
         };
 
         ~pop3client(){
-            socket_destruction();
-            gnutls_destruction();
+            if(socket_established){
+                socket_destruction();
+            }
+            if(tls_established){
+                gnutls_destruction();
+            }
         };
 
-        int temp();
+        int establish_connection();
+        void debug();
 
         int socket_setup();
         int resolve();

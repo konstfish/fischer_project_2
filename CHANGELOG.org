@@ -11,6 +11,11 @@
 - Add utils files for support classes
 - Add write_to_file method to utils class, to enable mails to be written as .eml files
 - Add documentation TeX structure & references File
+- Include spdlog Library
+- Add basic spdlog file sink
+- Add basic error handling to establish_connection function
+*** Changed
+- Split temp function into establish_connection & debug functions
 *** Removed
 - Removed subprocess attempt
 ** [0.0.3] - 2020-03-01

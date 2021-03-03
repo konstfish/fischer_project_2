@@ -18,13 +18,15 @@ catnr:  03
 using namespace std;
 
 int main() {
-    //auto console = spdlog::stdout_color_mt("console");
-    auto logger = spdlog::basic_logger_mt("console", "logs/basic-log.txt");
+    auto console = spdlog::stdout_color_mt("console");
+    auto logger = spdlog::basic_logger_mt("logger", "logs/basic-log.txt");
 
-
-    spdlog::get("console")->info("test!");
+    spdlog::get("logger")->info("Starting POP3 Client");
 
     //pop3client c("fortimail.konst.fish", 110, false);
     pop3client c("fortimail.konst.fish", 995, true);
-    c.temp();
+    c.establish_connection();
+    c.debug();
+
+    return 0;
 }
