@@ -123,24 +123,33 @@ int pop3client::gnutls_setup(){
     int ret;
     const char *err;
 
-    gnutls_global_init ();
-    gnutls_certificate_allocate_credentials (&xcred);
-
+    // X.509 authentication is used
+    gnutls_global_init();
+    gnutls_certificate_allocate_credentials(&xcred);
     gnutls_certificate_set_x509_system_trust(xcred);
+
+    // gnutls initialization (gnutls_sd = gnutls session descriptor)
     gnutls_init (&gnutls_sd, GNUTLS_CLIENT);
 
-    //gnutls_session_set_ptr (session, (void *) hostname);
-    //gnutls_transport_set_ptr (gnutls_sd, (gnutls_transport_ptr_t) sd);
-    // wird ned so wichtig sein, geht auch ohne
-
+    // verify server certificate
     gnutls_server_name_set (gnutls_sd, GNUTLS_NAME_DNS, hostname.c_str(), strlen(hostname.c_str()));
+    
+    // gnutls priorities (priority strings specify the TLS sessions handshake algorithms and options in a compact, easy-to-use format)
+    // https://gnutls.org/manual/html_node/Priority-Strings.html
     ret = gnutls_priority_set_direct (gnutls_sd, "NORMAL", &err);
+
+    // apply credentials to current session
     gnutls_credentials_set (gnutls_sd, GNUTLS_CRD_CERTIFICATE, xcred);
 
+    // link socket descriptor to gnutls socket descriptor
     gnutls_transport_set_int(gnutls_sd, sd);
+
+    // define handshake tieout on gnutls socket descriptor
     gnutls_handshake_set_timeout(gnutls_sd, GNUTLS_DEFAULT_HANDSHAKE_TIMEOUT);
 
+    // initialize handshake
     int err_handshake = gnutls_handshake(gnutls_sd);
+
     if(err_handshake){
         return 1;
     }

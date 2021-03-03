@@ -2,8 +2,7 @@
 ** [Unreleased]
 *** Added
 - Create repository
-
-** [0.0.4] - 2020-03-02
+** [0.0.4] - 2020-03-08
 *** Added
 - Add basic socket to pop3client Class
 - Add basic resolver to pop3client Class
@@ -14,7 +13,7 @@
 - Add documentation TeX structure & references File
 *** Removed
 - Removed subprocess attempt
-** [0.0.3] - 2020-03-02
+** [0.0.3] - 2020-03-01
 *** Added
 - Add Time Tracking Badge to README
 *** Changed
@@ -24,7 +23,7 @@
 *** Changed
 - Rewrote Socket to feature a resolver
 - Made basic changes to prepare TLS sockets
-** [0.0.1] - 2020-02-11
+** [0.0.1] - 2020-02-15
 *** Added
 - Include ASIO Library in main.cpp
 - Fill .gitignore

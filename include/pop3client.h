@@ -23,6 +23,10 @@ catnr:  03
 
 #include <gnutls/gnutls.h>
 
+#include <spdlog/spdlog.h>
+#include <spdlog/sinks/stdout_color_sinks.h>
+#include "spdlog/sinks/basic_file_sink.h"
+
 #include "util.h"
 
 class pop3client{
@@ -46,7 +50,9 @@ class pop3client{
         pop3client_utils utility;
 
     public:
-        pop3client(std::string hn, u_int16_t prt, bool tl) : hostname( hn ), port( prt ), tls( tl ){};
+        pop3client(std::string hn, u_int16_t prt, bool tl) : hostname( hn ), port( prt ), tls( tl ){
+            spdlog::get("console")->info("test!");
+        };
 
         ~pop3client(){
             socket_destruction();
