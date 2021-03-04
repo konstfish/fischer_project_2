@@ -14,6 +14,10 @@
 - Include spdlog Library
 - Add basic spdlog file sink
 - Add basic error handling to establish_connection function
+- Add split functions to utils.cpp
+- Add delete_message function to pop3client class
+- Add get_total_messages function to pop3client class
+- Add retrieve_messages function to pop3client class
 *** Changed
 - Split temp function into establish_connection & debug functions
 *** Removed

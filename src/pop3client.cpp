@@ -52,8 +52,9 @@ void pop3client::debug(){
     read();
     write("PASS 12345678");
     read();
-    write("RETR 1");
-    read();
+    
+    /*write("RETR 1");
+    read();*/
 
     write("RETR 1");
     utility.email_to_file(read_to_str());
@@ -155,13 +156,13 @@ void pop3client::socket_destruction(){
 
 // https://stackoverflow.com/questions/43264266/c-socket-send-and-connect
 void pop3client::read(){
-    char buff[80000]{};
+    char buff[14834]{};
     memset(buff, 0, sizeof(buff));
 
     if(tls){
-        gnutls_record_recv(gnutls_sd, buff, sizeof(buff) - 1);
+        gnutls_record_recv(gnutls_sd, buff, sizeof(buff));
     }else{
-        recv(sd, buff, sizeof(buff) - 1, 0);
+        recv(sd, buff, sizeof(buff), 0);
     }
 
     string rec = buff;
@@ -169,13 +170,13 @@ void pop3client::read(){
 }
 
 std::string pop3client::read_to_str(){
-    char buff[8000]{};
+    char buff[80000]{};
     memset(buff, 0, sizeof(buff));
 
     if(tls){
-        gnutls_record_recv(gnutls_sd, buff, sizeof(buff) - 1);
+        gnutls_record_recv(gnutls_sd, buff, sizeof(buff));
     }else{
-        recv(sd, buff, sizeof(buff) - 1, 0);
+        recv(sd, buff, sizeof(buff), 0);
     }
 
     string rec = buff;
@@ -197,4 +198,57 @@ int pop3client::write(std::string msg){
     }
 
     return result;
+}
+
+int pop3client::get_total_messages(){
+    write("STAT");
+    string res = read_to_str();
+    vector<string> res_vec = utility.split(res, " ");
+    
+    int amount = stoi(res_vec[1]);
+
+    spdlog::get("logger")->info("Server returned {} messages.", amount);
+
+    return amount;
+}
+
+int pop3client::delete_message(int message_id){
+    write("DELE " + to_string(message_id));
+    string res = read_to_str();
+    vector<string> res_vec = utility.split(res, " ");
+    
+    if(res_vec[0] != "+OK"){
+        spdlog::get("logger")->info("Unable to delete message with ID: ", message_id);
+        return 1;
+    }else{
+        spdlog::get("logger")->info("Deleted message with ID: ", message_id);
+    }
+
+    return 0;
+}
+
+vector<vector<string>> pop3client::retrieve_messages(int amount){
+    int total_messages = get_total_messages();
+    vector<vector<string>> messages;
+
+    if(amount > total_messages){
+        amount = total_messages;
+    }
+
+    int cur_message = total_messages;
+    while(cur_message > (total_messages - amount)){
+
+        write("RETR " + to_string(cur_message));
+        string res = read_to_str();
+        vector<string> res_vec = utility.split_message(res);
+
+        res_vec.push_back(to_string(cur_message));
+        messages.push_back(res_vec);
+
+        cur_message -= 1;
+    }
+
+    utility.print_messages(messages);
+
+    return messages;
 }

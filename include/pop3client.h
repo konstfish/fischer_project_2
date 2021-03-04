@@ -20,6 +20,7 @@ catnr:  03
 #include <netinet/in.h>
 #include <unistd.h>
 #include <netdb.h>
+#include <vector> 
 
 #include <gnutls/gnutls.h>
 
@@ -53,6 +54,14 @@ class pop3client{
 
         bool tls_established{false};
 
+        int socket_setup();
+        int resolve();
+
+        int gnutls_setup();
+
+        void gnutls_destruction();
+        void socket_destruction();
+
     public:
         pop3client(std::string hn, u_int16_t prt, bool tl) : hostname( hn ), port( prt ), tls( tl ){
             spdlog::get("logger")->info("Connecting to {} on Port {}. TLS Enabled ({})", hn, prt, tl);
@@ -67,18 +76,16 @@ class pop3client{
             }
         };
 
-        int establish_connection();
         void debug();
 
-        int socket_setup();
-        int resolve();
+        int establish_connection();
 
         void read();
         std::string read_to_str();
         int write(std::string msg);
 
-        int gnutls_setup();
-
-        void gnutls_destruction();
-        void socket_destruction();
+        int get_total_messages();
+        int delete_message(int message_id);
+        
+        std::vector<std::vector<std::string>> retrieve_messages(int amount);
 };

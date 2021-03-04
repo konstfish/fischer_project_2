@@ -28,5 +28,9 @@ int main() {
     c.establish_connection();
     c.debug();
 
+    c.get_total_messages();
+    //c.delete_message(2);
+    c.retrieve_messages(10);
+
     return 0;
 }

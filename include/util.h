@@ -12,6 +12,13 @@ catnr:  03
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <vector> 
+#include <algorithm>
+
+#include <spdlog/spdlog.h>
+#include <spdlog/sinks/stdout_color_sinks.h>
+#include "spdlog/sinks/basic_file_sink.h"
+
 class pop3client_utils{
     private:
 
@@ -21,4 +28,8 @@ class pop3client_utils{
         };
 
         int email_to_file(std::string write);
+
+        std::vector<std::string> split(std::string res, std::string split);
+        std::vector<std::string> split_message(std::string res);
+        void print_messages(std::vector<std::vector<std::string>> messages);
 };
