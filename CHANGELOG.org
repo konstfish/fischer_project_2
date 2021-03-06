@@ -28,8 +28,8 @@
 - Fixed output in pop3client_utils::print_messages
 - Cleaned up save_mail funtion (now saves complete emails as .eml files with the emails subject as file name)
 *** Removed
-- Removed subprocess attempt
-- Removed backup folder, as it no longer holds any importance
+- Remove subprocess attempt
+- Remove backup folder, as it no longer holds any importance
 ** [0.0.3] - 2020-03-01
 *** Added
 - Add Time Tracking Badge to README

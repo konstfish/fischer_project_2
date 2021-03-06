@@ -1,5 +1,6 @@
 .vscode
 builddir
+backup
 .DS_Store
 ._*
 src_ext/
