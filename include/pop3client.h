@@ -80,9 +80,11 @@ class pop3client{
 
         int establish_connection();
         int login(std::string user, std::string password);
+        int quit();
 
         void read();
         std::string read_to_str();
+        std::string read_to_end();
         int write(std::string msg);
 
         int get_total_messages();

@@ -29,8 +29,12 @@ int main() {
     c.login("user@nvs.com", "12345678");
 
     c.get_total_messages();
-    //c.delete_message(2);
-    c.retrieve_messages(10);
+    //c.delete_message(5);
+    c.retrieve_messages(4);
+
+    c.debug();
+
+    c.quit();
 
     return 0;
 }

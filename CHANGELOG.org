@@ -20,6 +20,9 @@
 - Add retrieve_messages function to pop3client class
 - Add login function to pop3client class
 - Include tablulate Library in util.h
+- Add quit funtion to pop3client class (gracefully ends sessions)
+- Add ends_with funtion to utils 
+- Add read_to_end function to pop3client class (reads messages larger than 8000 chars) 
 *** Changed
 - Split temp function into establish_connection & debug functions
 - Fixed output in pop3client_utils::print_messages

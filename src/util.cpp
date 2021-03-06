@@ -75,16 +75,20 @@ vector<string> pop3client_utils::split_message(string res){
     return vec;
 }
 
+// https://stackoverflow.com/questions/874134/find-out-if-string-ends-with-another-string-in-c
+bool pop3client_utils::ends_with(string s, string suffix)
+{
+    return s.size() >= suffix.size() && s.rfind(suffix) == (s.size()-suffix.size());
+}
+
 void pop3client_utils::print_messages(vector<vector<string>> messages){
     int size = messages.size();
     int i = size - 1;
     vector<string> temp;
 
-    // TODO FIX OUTPUT
+    tabulate::Table emails;
 
-    tabulate::Table stat_table;
-
-    stat_table.add_row({"Message ID", 
+    emails.add_row({"Message ID", 
                         "Recieved From", 
                         "Subject",
                         "Date"});
@@ -95,24 +99,13 @@ void pop3client_utils::print_messages(vector<vector<string>> messages){
         string subject = temp[1];
         string date = temp[2];
 
-        stat_table.add_row({message_id, 
+        emails.add_row({message_id, 
                         from, 
                         subject,
                         date});
 
-        /*int size2 = temp.size();
-        int i2 = 0;
-
-        string concat = message_id;
-
-        while(i2 < size2){
-            cout << temp[i2] << endl;
-            i2 += 1;
-        }*/
-
-        //spdlog::get("console")->info("Message ID: {} - {}: {} {}", message_id, from, subject, date);
         i -= 1;
     }
-    cout << stat_table << endl;
+    cout << emails << endl;
 
 }

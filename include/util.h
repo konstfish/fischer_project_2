@@ -33,5 +33,6 @@ class pop3client_utils{
 
         std::vector<std::string> split(std::string res, std::string split);
         std::vector<std::string> split_message(std::string res);
+        bool ends_with(std::string s, std::string suffix);
         void print_messages(std::vector<std::vector<std::string>> messages);
 };

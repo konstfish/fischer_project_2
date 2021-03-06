@@ -60,8 +60,8 @@ void pop3client::debug(){
     /*write("RETR 1");
     read();*/
 
-    write("RETR 1");
-    utility.email_to_file(read_to_str());
+    write("RETR 5");
+    utility.email_to_file(read_to_end());
 }
 
 // https://stackoverflow.com/questions/52727565/client-in-c-use-gethostbyname-or-getaddrinfo
@@ -160,7 +160,7 @@ void pop3client::socket_destruction(){
 
 // https://stackoverflow.com/questions/43264266/c-socket-send-and-connect
 void pop3client::read(){
-    char buff[14834]{};
+    char buff[8000]{};
     memset(buff, 0, sizeof(buff));
 
     if(tls){
@@ -170,11 +170,11 @@ void pop3client::read(){
     }
 
     string rec = buff;
-    //cout << rec;
+    cout << rec;
 }
 
-std::string pop3client::read_to_str(){
-    char buff[80000]{};
+string pop3client::read_to_str(){
+    char buff[8000]{};
     memset(buff, 0, sizeof(buff));
 
     if(tls){
@@ -184,6 +184,30 @@ std::string pop3client::read_to_str(){
     }
 
     string rec = buff;
+    return rec;
+}
+
+string pop3client::read_to_end(){
+    char buff[8000]{};
+    memset(buff, 0, sizeof(buff));
+
+    string key = ".\r\n";
+    string rec = "";
+    string tmp = "";
+
+    while(!utility.ends_with(tmp, key)){
+        if(tls){
+            gnutls_record_recv(gnutls_sd, buff, sizeof(buff));
+        }else{
+            recv(sd, buff, sizeof(buff), 0);
+        }
+
+        tmp = buff;
+        memset(buff, 0, sizeof(buff));
+
+        rec += tmp;
+    }
+
     return rec;
 }
 
@@ -242,7 +266,7 @@ vector<vector<string>> pop3client::retrieve_messages(int amount){
     int cur_message = total_messages;
     while(cur_message > (total_messages - amount)){
 
-        write("RETR " + to_string(cur_message));
+        write("TOP " + to_string(cur_message));
         string res = read_to_str();
         vector<string> res_vec = utility.split_message(res);
 
@@ -272,6 +296,25 @@ int pop3client::login(string user, string password){
     }else{
         spdlog::get("console")->info("Invalid User Data!");
         spdlog::get("logger")->info("Invalid User Data!");
+        return 1;
+    }
+
+    return 0;
+}
+
+int pop3client::quit(){
+
+    write("QUIT ");
+
+    string res = read_to_str();
+    vector<string> res_vec = utility.split(res, " ");
+
+    if(res_vec[0] == "+OK"){
+        spdlog::get("console")->info("Successfully Quit Session!");
+        spdlog::get("logger")->info("Successfully Quit Session in!");
+    }else{
+        spdlog::get("console")->info("Error while quitting Session!");
+        spdlog::get("logger")->info("Error while quitting Session!");
         return 1;
     }
 
