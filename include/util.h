@@ -29,7 +29,7 @@ class pop3client_utils{
 
         };
 
-        int email_to_file(std::string write);
+        int email_to_file(std::string write, std::string subject);
 
         std::vector<std::string> split(std::string res, std::string split);
         std::vector<std::string> split_message(std::string res);

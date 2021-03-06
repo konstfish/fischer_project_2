@@ -32,7 +32,9 @@ int main() {
     //c.delete_message(5);
     c.retrieve_messages(4);
 
-    c.debug();
+    c.save_mail(5);
+    c.save_mail(1);
+    c.save_mail(2);
 
     c.quit();
 

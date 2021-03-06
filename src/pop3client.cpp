@@ -60,8 +60,8 @@ void pop3client::debug(){
     /*write("RETR 1");
     read();*/
 
-    write("RETR 5");
-    utility.email_to_file(read_to_end());
+    //write("RETR 5");
+    //utility.email_to_file(read_to_end());
 }
 
 // https://stackoverflow.com/questions/52727565/client-in-c-use-gethostbyname-or-getaddrinfo
@@ -265,12 +265,8 @@ vector<vector<string>> pop3client::retrieve_messages(int amount){
 
     int cur_message = total_messages;
     while(cur_message > (total_messages - amount)){
+        vector<string> res_vec = retrieve_message_metadata(cur_message);
 
-        write("TOP " + to_string(cur_message));
-        string res = read_to_str();
-        vector<string> res_vec = utility.split_message(res);
-
-        res_vec.push_back(to_string(cur_message));
         messages.push_back(res_vec);
 
         cur_message -= 1;
@@ -279,6 +275,16 @@ vector<vector<string>> pop3client::retrieve_messages(int amount){
     utility.print_messages(messages);
 
     return messages;
+}
+
+vector<string> pop3client::retrieve_message_metadata(int message_id){
+    write("TOP " + to_string(message_id));
+    string res = read_to_str();
+    vector<string> res_vec = utility.split_message(res);
+
+    res_vec.push_back(to_string(message_id));
+
+    return res_vec;
 }
 
 int pop3client::login(string user, string password){
@@ -317,6 +323,18 @@ int pop3client::quit(){
         spdlog::get("logger")->info("Error while quitting Session!");
         return 1;
     }
+
+    return 0;
+}
+
+int pop3client::save_mail(int message_id){
+
+    write("RETR " + to_string(message_id));
+    string email = read_to_end();
+
+    vector<string> res_vec = retrieve_message_metadata(message_id);
+
+    utility.email_to_file(email, res_vec[1]);
 
     return 0;
 }

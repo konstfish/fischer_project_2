@@ -11,11 +11,21 @@ catnr:  03
 
 using namespace std;
 
-int pop3client_utils::email_to_file(string write){
+int pop3client_utils::email_to_file(string write, string subject){
     ofstream fstr;
-    fstr.open ("temp.eml");
+
+    // quick & dirty fix for question mark at the end of subject
+    subject = subject.substr(0, subject.size()-1);
+    string path = subject + ".eml";
+    fstr.open (path);
+
+    // remove dot from end of email
+    write = write.substr(0, write.size()-3);
+
     fstr << write;
+
     fstr.close();
+
     return 0;
 }
 
@@ -83,7 +93,7 @@ bool pop3client_utils::ends_with(string s, string suffix)
 
 void pop3client_utils::print_messages(vector<vector<string>> messages){
     int size = messages.size();
-    int i = size - 1;
+    int i = 0;
     vector<string> temp;
 
     tabulate::Table emails;
@@ -92,7 +102,7 @@ void pop3client_utils::print_messages(vector<vector<string>> messages){
                         "Recieved From", 
                         "Subject",
                         "Date"});
-    while(i >= 0){
+    while(i < size){
         temp = messages[i];
         string message_id = temp[3];
         string from = temp[0];
@@ -104,7 +114,7 @@ void pop3client_utils::print_messages(vector<vector<string>> messages){
                         subject,
                         date});
 
-        i -= 1;
+        i += 1;
     }
     cout << emails << endl;
 

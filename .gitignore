@@ -2,7 +2,6 @@
 builddir
 .DS_Store
 ._*
-build
 src_ext/
 dokumentation.bbl
 

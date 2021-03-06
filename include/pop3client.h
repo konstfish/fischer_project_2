@@ -90,5 +90,8 @@ class pop3client{
         int get_total_messages();
         int delete_message(int message_id);
         
+        std::vector<std::string> retrieve_message_metadata(int message_id);
         std::vector<std::vector<std::string>> retrieve_messages(int amount);
+
+        int save_mail(int message_id);
 };
