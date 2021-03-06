@@ -79,6 +79,7 @@ class pop3client{
         void debug();
 
         int establish_connection();
+        int login(std::string user, std::string password);
 
         void read();
         std::string read_to_str();

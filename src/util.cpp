@@ -77,19 +77,30 @@ vector<string> pop3client_utils::split_message(string res){
 
 void pop3client_utils::print_messages(vector<vector<string>> messages){
     int size = messages.size();
-    int i = 0;
+    int i = size - 1;
     vector<string> temp;
 
     // TODO FIX OUTPUT
 
-    while(i < size){
+    tabulate::Table stat_table;
+
+    stat_table.add_row({"Message ID", 
+                        "Recieved From", 
+                        "Subject",
+                        "Date"});
+    while(i >= 0){
         temp = messages[i];
         string message_id = temp[3];
         string from = temp[0];
         string subject = temp[1];
         string date = temp[2];
 
-        int size2 = temp.size();
+        stat_table.add_row({message_id, 
+                        from, 
+                        subject,
+                        date});
+
+        /*int size2 = temp.size();
         int i2 = 0;
 
         string concat = message_id;
@@ -97,10 +108,11 @@ void pop3client_utils::print_messages(vector<vector<string>> messages){
         while(i2 < size2){
             cout << temp[i2] << endl;
             i2 += 1;
-        }
+        }*/
 
-        spdlog::get("console")->info("Message ID: {} - {}: {} ({})", message_id, from, subject, date);
-        i += 1;
+        //spdlog::get("console")->info("Message ID: {} - {}: {} {}", message_id, from, subject, date);
+        i -= 1;
     }
+    cout << stat_table << endl;
 
 }

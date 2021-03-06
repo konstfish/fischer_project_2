@@ -38,21 +38,25 @@ int pop3client::establish_connection(){
         }
     }
 
-    spdlog::get("console")->info("Connection successfully established");
-    spdlog::get("logger")->info("Connection successfully established");
+    // wait for server response
+    usleep(100000);
+
+    string res = read_to_str();
+    vector<string> res_vec = utility.split(res, " ");
+
+    if(res_vec[0] == "+OK"){
+        spdlog::get("console")->info("Connection successfully established");
+        spdlog::get("logger")->info("Connection successfully established");
+    }else{
+        spdlog::get("console")->error("Unable to connect");
+        spdlog::get("logger")->error("Unable to connect");
+        return 1;
+    }
 
     return 0;
 }
 
-void pop3client::debug(){
-    usleep(100000);
-
-    read();
-    write("USER user@nvs.com");
-    read();
-    write("PASS 12345678");
-    read();
-    
+void pop3client::debug(){    
     /*write("RETR 1");
     read();*/
 
@@ -166,7 +170,7 @@ void pop3client::read(){
     }
 
     string rec = buff;
-    cout << rec;
+    //cout << rec;
 }
 
 std::string pop3client::read_to_str(){
@@ -251,4 +255,25 @@ vector<vector<string>> pop3client::retrieve_messages(int amount){
     utility.print_messages(messages);
 
     return messages;
+}
+
+int pop3client::login(string user, string password){
+
+    write("USER " + user);
+    read();
+    write("PASS " + password);
+
+    string res = read_to_str();
+    vector<string> res_vec = utility.split(res, " ");
+
+    if(res_vec[0] == "+OK"){
+        spdlog::get("console")->info("Successfully Logged in!");
+        spdlog::get("logger")->info("Successfully Logged in!");
+    }else{
+        spdlog::get("console")->info("Invalid User Data!");
+        spdlog::get("logger")->info("Invalid User Data!");
+        return 1;
+    }
+
+    return 0;
 }

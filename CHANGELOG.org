@@ -18,8 +18,11 @@
 - Add delete_message function to pop3client class
 - Add get_total_messages function to pop3client class
 - Add retrieve_messages function to pop3client class
+- Add login function to pop3client class
+- Include tablulate Library in util.h
 *** Changed
 - Split temp function into establish_connection & debug functions
+- Fixed output in pop3client_utils::print_messages
 *** Removed
 - Removed subprocess attempt
 ** [0.0.3] - 2020-03-01

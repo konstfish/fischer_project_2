@@ -26,7 +26,7 @@ int main() {
     //pop3client c("fortimail.konst.fish", 110, false);
     pop3client c("fortimail.konst.fish", 995, true);
     c.establish_connection();
-    c.debug();
+    c.login("user@nvs.com", "12345678");
 
     c.get_total_messages();
     //c.delete_message(2);

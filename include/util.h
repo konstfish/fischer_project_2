@@ -19,6 +19,8 @@ catnr:  03
 #include <spdlog/sinks/stdout_color_sinks.h>
 #include "spdlog/sinks/basic_file_sink.h"
 
+#include <tabulate/table.hpp>
+
 class pop3client_utils{
     private:
 
