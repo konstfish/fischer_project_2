@@ -21,11 +21,11 @@ catnr:  03
 
 #include <tabulate/table.hpp>
 
-class pop3client_utils{
+class POP3client_utils{
     private:
 
     public:
-        pop3client_utils(){
+        POP3client_utils(){
 
         };
 

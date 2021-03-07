@@ -47,7 +47,7 @@ inc_dir = include_directories(['include',
                               ])
 
 
-src = ['src/main.cpp', 'src/pop3client.cpp', 'src/util.cpp']
+src = ['src/main.cpp', 'src/POP3client.cpp', 'src/Util.cpp', 'src/Interactive.cpp']
 #protobuf: src = ['src/main.cpp', generated]
 
 executable('bubble',

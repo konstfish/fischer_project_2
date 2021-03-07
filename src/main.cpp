@@ -7,7 +7,7 @@ class:  5C
 catnr:  03
 */
 
-#include "pop3client.h"
+#include "POP3client.h"
 
 #include "CLI11.hpp"
 
@@ -104,7 +104,7 @@ int main(int argc, char* argv[]) {
     //pop3client c("fortimail.konst.fish", 995, true);
 
     // create pop3client
-    pop3client c(servername, port, use_tls);
+    POP3client c(servername, port, use_tls);
     int check = 0;
     
     check = c.establish_connection();

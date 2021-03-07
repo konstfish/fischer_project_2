@@ -28,9 +28,9 @@ catnr:  03
 #include <spdlog/sinks/stdout_color_sinks.h>
 #include "spdlog/sinks/basic_file_sink.h"
 
-#include "util.h"
+#include "Util.h"
 
-class pop3client{
+class POP3client{
     private:
         std::string end_signal = ".\r";
 
@@ -50,7 +50,7 @@ class pop3client{
         gnutls_certificate_credentials_t xcred;
         gnutls_session_t gnutls_sd;
 
-        pop3client_utils utility;
+        POP3client_utils utility;
 
         bool tls_established{false};
 
@@ -63,11 +63,11 @@ class pop3client{
         void socket_destruction();
 
     public:
-        pop3client(std::string hn, u_int16_t prt, bool tl) : hostname( hn ), port( prt ), tls( tl ){
+        POP3client(std::string hn, u_int16_t prt, bool tl) : hostname( hn ), port( prt ), tls( tl ){
             spdlog::get("logger")->info("Connecting to {} on Port {}. TLS Enabled ({})", hn, prt, tl);
         };
 
-        ~pop3client(){
+        ~POP3client(){
             if(socket_established){
                 socket_destruction();
             }

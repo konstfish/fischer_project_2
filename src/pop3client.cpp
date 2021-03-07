@@ -7,11 +7,11 @@ class:  5C
 catnr:  03
 */
 
-#include "pop3client.h"
+#include "POP3client.h"
 
 using namespace std;
 
-int pop3client::establish_connection(){
+int POP3client::establish_connection(){
     int check{0};
 
     check = resolve();
@@ -56,7 +56,7 @@ int pop3client::establish_connection(){
     return 0;
 }
 
-void pop3client::debug(){    
+void POP3client::debug(){    
     /*write("RETR 1");
     read();*/
 
@@ -66,7 +66,7 @@ void pop3client::debug(){
 
 // https://stackoverflow.com/questions/52727565/client-in-c-use-gethostbyname-or-getaddrinfo
 // https://stackoverflow.com/questions/38002016/problems-with-gethostbyname-c
-int pop3client::resolve() {
+int POP3client::resolve() {
     hostent *rh     = gethostbyname(hostname.c_str());
     if(rh == NULL){
         return 1;
@@ -81,7 +81,7 @@ int pop3client::resolve() {
 }
 
 // http://www.hep.by/gnu/gnutls/Helper-functions-for-TCP-connections.html#Helper-functions-for-TCP-connections
-int pop3client::socket_setup(){
+int POP3client::socket_setup(){
     int err;
 
     sd = socket(addrfamily, SOCK_STREAM, 0);
@@ -104,7 +104,7 @@ int pop3client::socket_setup(){
 }
 
 // http://www.hep.by/gnu/gnutls/Simple-client-example-with-X_002e509-certificate-support.html#Simple-client-example-with-X_002e509-certificate-support
-int pop3client::gnutls_setup(){
+int POP3client::gnutls_setup(){
     int ret;
     const char *err;
 
@@ -144,7 +144,7 @@ int pop3client::gnutls_setup(){
     return 0;
 }
 
-void pop3client::gnutls_destruction(){
+void POP3client::gnutls_destruction(){
     gnutls_bye (gnutls_sd, GNUTLS_SHUT_RDWR);
 
     gnutls_deinit (gnutls_sd);
@@ -153,13 +153,13 @@ void pop3client::gnutls_destruction(){
 }
 
 
-void pop3client::socket_destruction(){
+void POP3client::socket_destruction(){
   shutdown (sd, SHUT_RDWR);
   close (sd);
 }
 
 // https://stackoverflow.com/questions/43264266/c-socket-send-and-connect
-void pop3client::read(){
+void POP3client::read(){
     char buff[8000]{};
     memset(buff, 0, sizeof(buff));
 
@@ -173,7 +173,7 @@ void pop3client::read(){
     //cout << rec;
 }
 
-string pop3client::read_to_str(){
+string POP3client::read_to_str(){
     char buff[8000]{};
     memset(buff, 0, sizeof(buff));
 
@@ -187,7 +187,7 @@ string pop3client::read_to_str(){
     return rec;
 }
 
-string pop3client::read_to_end(){
+string POP3client::read_to_end(){
     char buff[8000]{};
     memset(buff, 0, sizeof(buff));
 
@@ -212,7 +212,7 @@ string pop3client::read_to_end(){
 }
 
 // https://stackoverflow.com/questions/43264266/c-socket-send-and-connect
-int pop3client::write(std::string msg){
+int POP3client::write(std::string msg){
     msg = msg + "\n";
     const char *cmsg = msg.c_str();
     int msg_len = strlen(cmsg);
@@ -228,7 +228,7 @@ int pop3client::write(std::string msg){
     return result;
 }
 
-int pop3client::get_total_messages(){
+int POP3client::get_total_messages(){
     write("STAT");
     string res = read_to_str();
     vector<string> res_vec = utility.split(res, " ");
@@ -240,7 +240,7 @@ int pop3client::get_total_messages(){
     return amount;
 }
 
-int pop3client::delete_message(int message_id){
+int POP3client::delete_message(int message_id){
     write("DELE " + to_string(message_id));
     string res = read_to_str();
     vector<string> res_vec = utility.split(res, " ");
@@ -257,7 +257,7 @@ int pop3client::delete_message(int message_id){
     return 0;
 }
 
-vector<vector<string>> pop3client::retrieve_messages(int amount){
+vector<vector<string>> POP3client::retrieve_messages(int amount){
     int total_messages = get_total_messages();
     vector<vector<string>> messages;
 
@@ -279,7 +279,7 @@ vector<vector<string>> pop3client::retrieve_messages(int amount){
     return messages;
 }
 
-vector<string> pop3client::retrieve_message_metadata(int message_id){
+vector<string> POP3client::retrieve_message_metadata(int message_id){
     write("TOP " + to_string(message_id));
     string res = read_to_str();
     vector<string> res_vec = utility.split_message(res);
@@ -289,7 +289,7 @@ vector<string> pop3client::retrieve_message_metadata(int message_id){
     return res_vec;
 }
 
-int pop3client::login(string user, string password){
+int POP3client::login(string user, string password){
 
     write("USER " + user);
     read();
@@ -310,7 +310,7 @@ int pop3client::login(string user, string password){
     return 0;
 }
 
-int pop3client::quit(){
+int POP3client::quit(){
 
     write("QUIT ");
 
@@ -329,7 +329,7 @@ int pop3client::quit(){
     return 0;
 }
 
-int pop3client::save_mail(int message_id){
+int POP3client::save_mail(int message_id){
 
     write("RETR " + to_string(message_id));
     string email = read_to_end();

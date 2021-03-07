@@ -7,11 +7,11 @@ class:  5C
 catnr:  03
 */
 
-#include "util.h"
+#include "Util.h"
 
 using namespace std;
 
-int pop3client_utils::email_to_file(string write, string subject){
+int POP3client_utils::email_to_file(string write, string subject){
     ofstream fstr;
 
     // quick & dirty fix for question mark at the end of subject
@@ -29,7 +29,7 @@ int pop3client_utils::email_to_file(string write, string subject){
     return 0;
 }
 
-vector<string> pop3client_utils::split(string res, string split){
+vector<string> POP3client_utils::split(string res, string split){
     vector<string> vec;
 
     size_t pos = 0;
@@ -48,7 +48,7 @@ vector<string> pop3client_utils::split(string res, string split){
     return vec;
 }
 
-vector<string> pop3client_utils::split_message(string res){
+vector<string> POP3client_utils::split_message(string res){
     vector<string> vec;
 
     size_t pos = 0;
@@ -86,12 +86,12 @@ vector<string> pop3client_utils::split_message(string res){
 }
 
 // https://stackoverflow.com/questions/874134/find-out-if-string-ends-with-another-string-in-c
-bool pop3client_utils::ends_with(string s, string suffix)
+bool POP3client_utils::ends_with(string s, string suffix)
 {
     return s.size() >= suffix.size() && s.rfind(suffix) == (s.size()-suffix.size());
 }
 
-void pop3client_utils::print_messages(vector<vector<string>> messages){
+void POP3client_utils::print_messages(vector<vector<string>> messages){
     int size = messages.size();
     int i = 0;
     vector<string> temp;
