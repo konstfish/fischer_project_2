@@ -59,7 +59,8 @@ int main(int argc, char* argv[]) {
 
     // Enable interactive Shell
 
-    // TODO
+    bool enable_interactive{false};
+    app.add_flag("-i, --interactive", enable_interactive, "Enable Interactive Shell");
 
     // Enable web interface
 
@@ -131,11 +132,12 @@ int main(int argc, char* argv[]) {
         c.delete_message(del);
     }
 
-    Interactive shell(ref(c));
-
-    shell.run();
-
-    // c.quit();
+    if(enable_interactive){
+        Interactive shell(ref(c));
+        shell.run();
+    }else{
+        c.quit();
+    }
 
     return 0;
 }

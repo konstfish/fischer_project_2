@@ -35,6 +35,7 @@
 - Add simple handling for CLA commands
 - Add Interactive.h & Interactive.cpp
 - Add Interactive class to handle responsive input of commands
+- Add CLA to enable Interactive shell
 *** Removed
 - Remove subprocess attempt
 - Remove backup folder, as it no longer holds any importance
