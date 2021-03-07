@@ -1,7 +1,7 @@
 /*
 author: David Fischer
 matnr:  i16079
-file:   pop3client.h
+file:   POP3client.h
 desc:   NVS Projekt 2 - Simpler POP3 Client mit TLS Support
 class:  5C
 catnr:  03

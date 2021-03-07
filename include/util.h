@@ -1,7 +1,7 @@
 /*
 author: David Fischer
 matnr:  i16079
-file:   util.h
+file:   Util.h
 desc:   NVS Projekt 2 - Simpler POP3 Client mit TLS Support
 class:  5C
 catnr:  03
@@ -9,17 +9,17 @@ catnr:  03
 
 #pragma once
 
-#include <iostream>
-#include <fstream>
-#include <string>
-#include <vector> 
-#include <algorithm>
-
 #include <spdlog/spdlog.h>
 #include <spdlog/sinks/stdout_color_sinks.h>
 #include "spdlog/sinks/basic_file_sink.h"
 
 #include <tabulate/table.hpp>
+
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <vector> 
+#include <algorithm>
 
 class POP3client_utils{
     private:

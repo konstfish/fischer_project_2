@@ -33,9 +33,14 @@
 - Add simple json parsing to read config file
 - Add simple commands to CLA list
 - Add simple handling for CLA commands
+- Add Interactive.h & Interactive.cpp
+- Add Interactive class to handle responsive input of commands
 *** Removed
 - Remove subprocess attempt
 - Remove backup folder, as it no longer holds any importance
+*** Changed
+- Update Naming Scheme
+- Update retrieve_messages function. Now works when messages are marked for deletion
 ** [0.0.3] - 2020-03-01
 *** Added
 - Add Time Tracking Badge to README

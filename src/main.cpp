@@ -8,6 +8,7 @@ catnr:  03
 */
 
 #include "POP3client.h"
+#include "Interactive.h"
 
 #include "CLI11.hpp"
 
@@ -130,7 +131,11 @@ int main(int argc, char* argv[]) {
         c.delete_message(del);
     }
 
-    c.quit();
+    Interactive shell(ref(c));
+
+    shell.run();
+
+    // c.quit();
 
     return 0;
 }
