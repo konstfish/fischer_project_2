@@ -246,10 +246,12 @@ int pop3client::delete_message(int message_id){
     vector<string> res_vec = utility.split(res, " ");
     
     if(res_vec[0] != "+OK"){
-        spdlog::get("logger")->info("Unable to delete message with ID: ", message_id);
+        spdlog::get("console")->info("Unable to delete message with ID: {}", message_id);
+        spdlog::get("logger")->info("Unable to delete message with ID: {}", message_id);
         return 1;
     }else{
-        spdlog::get("logger")->info("Deleted message with ID: ", message_id);
+        spdlog::get("console")->info("Deleted message with ID: {}", message_id);
+        spdlog::get("logger")->info("Deleted message with ID: {}", message_id);
     }
 
     return 0;
@@ -317,7 +319,7 @@ int pop3client::quit(){
 
     if(res_vec[0] == "+OK"){
         spdlog::get("console")->info("Successfully Quit Session!");
-        spdlog::get("logger")->info("Successfully Quit Session in!");
+        spdlog::get("logger")->info("Successfully Quit Session!");
     }else{
         spdlog::get("console")->info("Error while quitting Session!");
         spdlog::get("logger")->info("Error while quitting Session!");
@@ -334,7 +336,17 @@ int pop3client::save_mail(int message_id){
 
     vector<string> res_vec = retrieve_message_metadata(message_id);
 
-    utility.email_to_file(email, res_vec[1]);
+    int check{1};
+
+    check = utility.email_to_file(email, res_vec[1]);
+    if(check){
+        spdlog::get("console")->info("Unable to save message with ID: {} as {}", message_id, res_vec[1]);
+        spdlog::get("logger")->info("Unable to save message with ID: {} as {}", message_id, res_vec[1]);
+        return 1;
+    }else{
+        spdlog::get("console")->info("Saved message with ID: {} as {}", message_id, res_vec[1]);
+        spdlog::get("logger")->info("Saved message with ID: {} as {}", message_id, res_vec[1]);
+    }
 
     return 0;
 }

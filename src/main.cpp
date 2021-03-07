@@ -26,13 +26,14 @@ int main(int argc, char* argv[]) {
     // CLI11 setup
     CLI::App app("POP3 Client");
 
-    string servername = "";
+    // Connection Options
+    string servername{""};
     app.add_option("-s,--server", servername, "Server Domain");
 
-    string username = "";
+    string username{""};
     app.add_option("-u,--user", username, "Account Name");
 
-    string password = "";
+    string password{""};
     app.add_option("-p,--pass", password, "Account Password");
 
     bool use_tls{false};
@@ -41,16 +42,36 @@ int main(int argc, char* argv[]) {
     int port{-1};
     app.add_option("--port", port, "Specify custom port");
 
-    string jsonfile = "";
+    string jsonfile{""};
     app.add_option("-j,--json", jsonfile, "Relative path to JSON file containing the Config");
 
+    // Commands to execute
+    int download{-1};
+    app.add_option("-d,--download", download, "Download Email with specified ID");
+
+    int del{-1};
+    app.add_option("-r,--remove", del, "Delete Email with specified ID");
+
+    int list{-1};
+    app.add_option("-l,--list", list, "List ")
+        ->check(CLI::Range(1,50).description("Range of Emails limited to sensible values").active(true).name("range"));
+
+    // Enable interactive Shell
+
+    // TODO
+
+    // Enable web interface
+
+    // TODO
+
+    // PARSE argv
     try {
         app.parse(argc, argv);
     } catch (const CLI::ParseError &e) { 
         return app.exit(e);
     }
 
-
+    // Prase json, if specified
     if(jsonfile != ""){
         std::ifstream i("../" + jsonfile);
         json j;
@@ -73,6 +94,7 @@ int main(int argc, char* argv[]) {
         }
     }
 
+    // set up spdlog
     auto console = spdlog::stdout_color_mt("console");
     auto logger = spdlog::basic_logger_mt("logger", "logs/basic-log.txt");
 
@@ -81,24 +103,32 @@ int main(int argc, char* argv[]) {
     //pop3client c("fortimail.konst.fish", 110, false);
     //pop3client c("fortimail.konst.fish", 995, true);
 
+    // create pop3client
     pop3client c(servername, port, use_tls);
     int check = 0;
+    
     check = c.establish_connection();
     if(check){
         return 1;
     }
-    //c.login("user@nvs.com", "12345678");
+
     check = c.login(username, password);
     if(check){
         return 1;
     }
-    c.get_total_messages();
-    //c.delete_message(5);
-    c.retrieve_messages(4);
 
-    c.save_mail(5);
-    c.save_mail(1);
-    c.save_mail(2);
+    // check for commands
+    if(download != -1){
+        c.save_mail(download);
+    }
+
+    if(list != -1){
+        c.retrieve_messages(list);
+    }
+
+    if(del != -1){
+        c.delete_message(del);
+    }
 
     c.quit();
 

@@ -31,6 +31,8 @@
 - Add simple CLA handling
 - Include JSON Library in main.cpp
 - Add simple json parsing to read config file
+- Add simple commands to CLA list
+- Add simple handling for CLA commands
 *** Removed
 - Remove subprocess attempt
 - Remove backup folder, as it no longer holds any importance
