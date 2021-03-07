@@ -9,16 +9,18 @@ catnr:  03
 
 #include "pop3client.h"
 
+#include "CLI11.hpp"
+
+#include <json.hpp>
+
 #include <spdlog/spdlog.h>
 #include <spdlog/sinks/stdout_color_sinks.h>
 #include "spdlog/sinks/basic_file_sink.h"
 
-#include "CLI11.hpp"
-
-
 #include <iostream>
 
 using namespace std;
+using json = nlohmann::json;
 
 int main(int argc, char* argv[]) {
     // CLI11 setup
@@ -39,10 +41,27 @@ int main(int argc, char* argv[]) {
     int port{-1};
     app.add_option("--port", port, "Specify custom port");
 
+    string jsonfile = "";
+    app.add_option("-j,--json", jsonfile, "Relative path to JSON file containing the Config");
+
     try {
         app.parse(argc, argv);
     } catch (const CLI::ParseError &e) { 
         return app.exit(e);
+    }
+
+
+    if(jsonfile != ""){
+        std::ifstream i("../" + jsonfile);
+        json j;
+        i >> j;
+        //cout << j << endl;
+
+        servername = j["hostname"];
+        username = j["username"];
+        password = j["password"];
+        use_tls = j["tls"];
+        port = j["port"];
     }
 
     // set port dynamically if not specified
@@ -61,7 +80,7 @@ int main(int argc, char* argv[]) {
 
     //pop3client c("fortimail.konst.fish", 110, false);
     //pop3client c("fortimail.konst.fish", 995, true);
-    cout << servername << endl;
+
     pop3client c(servername, port, use_tls);
     int check = 0;
     check = c.establish_connection();

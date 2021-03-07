@@ -170,7 +170,7 @@ void pop3client::read(){
     }
 
     string rec = buff;
-    cout << rec;
+    //cout << rec;
 }
 
 string pop3client::read_to_str(){

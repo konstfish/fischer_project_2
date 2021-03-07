@@ -1,0 +1,7 @@
+{
+    "hostname": "fortimail.konst.fish",
+    "tls": true,
+    "port": 995,
+    "username": "user@nvs.com",
+    "password": "12345678"
+}

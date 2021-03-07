@@ -29,6 +29,8 @@
 - Cleaned up save_mail funtion (now saves complete emails as .eml files with the emails subject as file name)
 - Include CLI11 Library in main.cpp
 - Add simple CLA handling
+- Include JSON Library in main.cpp
+- Add simple json parsing to read config file
 *** Removed
 - Remove subprocess attempt
 - Remove backup folder, as it no longer holds any importance
