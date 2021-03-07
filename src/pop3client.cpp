@@ -1,7 +1,7 @@
 /*
 author: David Fischer
 matnr:  i16079
-file:   pop3client.cpp
+file:   POP3client.cpp
 desc:   NVS Projekt 2 - Simpler POP3 Client mit TLS Support
 class:  5C
 catnr:  03
@@ -265,13 +265,29 @@ vector<vector<string>> POP3client::retrieve_messages(int amount){
         amount = total_messages;
     }
 
+    int retrieve = 0;
+
     int cur_message = total_messages;
     while(cur_message > (total_messages - amount)){
         vector<string> res_vec = retrieve_message_metadata(cur_message);
 
+        if(res_vec[0] == "MARKED FOR DELETION"){
+            retrieve += 1;
+        }
+
         messages.push_back(res_vec);
 
         cur_message -= 1;
+    }
+
+    int i = 1;
+    while(i <= retrieve){
+        cout << total_messages + 1 << endl;
+        vector<string> res_vec = retrieve_message_metadata(total_messages + i);
+        //messages.push_back(res_vec);
+        messages.insert(messages.begin(), 1, res_vec);
+
+        i += 1;
     }
 
     utility.print_messages(messages);
@@ -282,7 +298,18 @@ vector<vector<string>> POP3client::retrieve_messages(int amount){
 vector<string> POP3client::retrieve_message_metadata(int message_id){
     write("TOP " + to_string(message_id));
     string res = read_to_str();
-    vector<string> res_vec = utility.split_message(res);
+
+    vector<string> res_vec;
+
+    if(res[0] == '-') {
+        int i = 0;
+        while(i < 3){
+            res_vec.push_back("MARKED FOR DELETION");
+            i += 1;
+        }
+    }else{
+        res_vec = utility.split_message(res);
+    }
 
     res_vec.push_back(to_string(message_id));
 
