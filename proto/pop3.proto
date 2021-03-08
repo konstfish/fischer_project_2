@@ -1,0 +1,19 @@
+syntax = "proto2";
+
+package pop3msg;
+
+message MailMeta {
+    optional int32 message_id = 1;
+    optional string from = 2;
+    optional string subject = 3;
+    optional string date = 4;
+}
+
+message MailList {
+    repeated MailMeta mails = 1;
+}
+
+message Success {
+    optional string message_id = 1;
+    optional int32 valid = 2;
+}

@@ -282,7 +282,6 @@ vector<vector<string>> POP3client::retrieve_messages(int amount){
 
     int i = 1;
     while(i <= retrieve){
-        cout << total_messages + 1 << endl;
         vector<string> res_vec = retrieve_message_metadata(total_messages + i);
         //messages.push_back(res_vec);
         messages.insert(messages.begin(), 1, res_vec);
