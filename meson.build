@@ -26,15 +26,17 @@ add_global_arguments('-I' + get_option('spdlog_include_dir'), language : 'cpp')
 
 # # begin protobuf: https://developers.google.com/protocol-buffers/
 # # protobuf: must be installed independently and has to be found...
-# protoc = find_program('protoc', required : true)
-# protobuf_dep = dependency('protobuf', required : true)
+protoc = find_program('protoc', required : true)
+protobuf_dep = dependency('protobuf', required : true)
 
-# gen = generator(protoc, \
-#   output    : ['@BASENAME@.pb.cc', '@BASENAME@.pb.h'],
-#   arguments : ['--proto_path=@CURRENT_SOURCE_DIR@/src', '--cpp_out=@BUILD_DIR@', '@PLAINNAME@'])
+gen = generator(protoc, \
+   output    : ['@BASENAME@.pb.cc', '@BASENAME@.pb.h'],
+   arguments : ['--proto_path=@CURRENT_SOURCE_DIR@/src', '--cpp_out=@BUILD_DIR@', '@PLAINNAME@'])
 
 # # change proto file accordingly
-# generated = gen.process('src/dummy.proto')
+generated = gen.process('src/pop3.proto')
+
+
 # # end protobuf
 
 # subdir('SUBDIR1')
@@ -47,11 +49,11 @@ inc_dir = include_directories(['include',
                               ])
 
 
-src = ['src/main.cpp', 'src/POP3client.cpp', 'src/Util.cpp', 'src/Interactive.cpp']
+src = ['src/main.cpp', 'src/POP3client.cpp', 'src/Util.cpp', 'src/Interactive.cpp', generated]
 #protobuf: src = ['src/main.cpp', generated]
 
 executable('bubble',
            sources : src,
            include_directories : inc_dir,
-           dependencies : [gnutls_dep]
+           dependencies : [gnutls_dep, protobuf_dep]
           )
