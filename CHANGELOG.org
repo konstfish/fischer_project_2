@@ -6,6 +6,9 @@
 *** Added
 - Add protobuff test directorypop3.proto to src
 - Add protobuff build to meson
+***  Changed
+- Update meson.build file
+- Add a few sections to README.md
 ** [0.0.4] - 2020-03-08
 *** Added
 - Add basic socket to pop3client Class

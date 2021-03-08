@@ -67,7 +67,7 @@ void POP3client::debug(){
 // https://stackoverflow.com/questions/52727565/client-in-c-use-gethostbyname-or-getaddrinfo
 // https://stackoverflow.com/questions/38002016/problems-with-gethostbyname-c
 int POP3client::resolve() {
-    hostent *rh     = gethostbyname(hostname.c_str());
+    hostent *rh = gethostbyname(hostname.c_str());
     if(rh == NULL){
         return 1;
     }
@@ -76,7 +76,6 @@ int POP3client::resolve() {
 
     addrfamily  = rh->h_addrtype;
     ipaddr      = inet_ntoa(*ipptr[0]);
-
     return 0;
 }
 
@@ -151,7 +150,6 @@ void POP3client::gnutls_destruction(){
     gnutls_certificate_free_credentials (xcred);
     gnutls_global_deinit ();
 }
-
 
 void POP3client::socket_destruction(){
   shutdown (sd, SHUT_RDWR);
@@ -356,7 +354,6 @@ int POP3client::quit(){
 }
 
 int POP3client::save_mail(int message_id){
-
     write("RETR " + to_string(message_id));
     string email = read_to_end();
 
