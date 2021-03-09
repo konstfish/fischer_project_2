@@ -2,6 +2,14 @@ syntax = "proto2";
 
 package pop3msg;
 
+service POP3CS {
+    rpc get_mail_list(Operation) returns (MailList) {}
+
+    rpc delete_mail(Operation) returns (Success) {}
+
+    rpc save_mail(Operation) returns (Success) {}
+}
+
 message MailMeta {
     optional int32 message_id = 1;
     optional string from = 2;
@@ -14,6 +22,11 @@ message MailList {
 }
 
 message Success {
-    optional string message_id = 1;
+    optional int32 message_id = 1;
     optional int32 valid = 2;
+}
+
+message Operation {
+    optional string cmd = 1;
+    optional string arg = 2;
 }

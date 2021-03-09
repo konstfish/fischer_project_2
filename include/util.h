@@ -9,15 +9,14 @@ catnr:  03
 
 #pragma once
 
-#include <spdlog/spdlog.h>
-
-#include <tabulate/table.hpp>
-
 #include <iostream>
 #include <fstream>
 #include <string>
 #include <vector> 
 #include <algorithm>
+
+#include <spdlog/spdlog.h>
+#include <tabulate/table.hpp>
 
 class POP3client_utils{
     private:

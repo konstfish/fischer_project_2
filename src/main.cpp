@@ -9,6 +9,8 @@ catnr:  03
 
 #include "POP3client.h"
 #include "Interactive.h"
+#include "ProtoInterface.h"
+#include "pop3.pb.h"
 
 #include "CLI11.hpp"
 
@@ -132,12 +134,23 @@ int main(int argc, char* argv[]) {
         c.delete_message(del);
     }
 
+    // ProtoServer
+
+    ProtoInterface proto(ref(c));
+    pop3msg::MailList temp =  proto.retrieve_messages(10);
+    cout << temp.mails_size() << endl;
+    cout << temp.mails(1).from() << endl;
+
+    // INTERACTIVE SHELL
+
     if(enable_interactive){
         Interactive shell(ref(c));
         shell.run();
     }else{
         c.quit();
     }
+
+
 
     return 0;
 }

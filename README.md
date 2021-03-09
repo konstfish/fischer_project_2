@@ -13,6 +13,14 @@
 ## Short Summary
 The goal of this assigment was the creation of a POP3 Client, including support for GnuTLS.
 
+```
+  _           _     _     _        0  
+  | |__  _   _| |__ | |__ | | ___    o   
+  | '_ \| | | | '_ \| '_ \| |/ _ \    O 
+  | |_) | |_| | |_) | |_) | |  __/   0  
+  |_.__/ \__,_|_.__/|_.__/|_|\___|    o         
+```
+
 ## Usage
 
 ```

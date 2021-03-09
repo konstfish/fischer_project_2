@@ -6,6 +6,8 @@
 *** Added
 - Add protobuff test directorypop3.proto to src
 - Add protobuff build to meson
+- Add ProtoInterface class
+- Add ProtoBuff handler functions
 ***  Changed
 - Update meson.build file
 - Add a few sections to README.md
