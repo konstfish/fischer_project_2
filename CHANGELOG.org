@@ -14,11 +14,14 @@
 - Add grpc routes to pop3.proto
 - Add grpc routes to Server Class
 - Add grpc routes to Client Class
+- Add error handling to JSON Parser
 ***  Changed
 - Update meson.build file
 - Add a few sections to README.md
 - Update meson.build to feature grpc
 - Rewrote Interactive Class to use gRPC client as communication medium
+- Clean up ProtoInterface.h
+- Move Console spdlog entries to Interactive class
 ** [0.0.4] - 2020-03-08
 *** Added
 - Add basic socket to pop3client Class

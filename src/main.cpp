@@ -69,9 +69,9 @@ int main(int argc, char* argv[]) {
     bool enable_interactive{false};
     app.add_flag("-i, --interactive", enable_interactive, "Enable Interactive Shell");
 
-    // Enable web interface
-
-    // TODO
+    // set up spdlog
+    auto console = spdlog::stdout_color_mt("console");
+    auto logger = spdlog::basic_logger_mt("logger", "logs/basic-log.txt");
 
     // PARSE argv
     try {
@@ -82,16 +82,21 @@ int main(int argc, char* argv[]) {
 
     // Prase json, if specified
     if(jsonfile != ""){
-        std::ifstream i("../" + jsonfile);
-        json j;
-        i >> j;
-        //cout << j << endl;
+        try{
+            std::ifstream i(jsonfile);
+            json j;
+            i >> j;
+            //cout << j << endl;
 
-        servername = j["hostname"];
-        username = j["username"];
-        password = j["password"];
-        use_tls = j["tls"];
-        port = j["port"];
+            servername = j["hostname"];
+            username = j["username"];
+            password = j["password"];
+            use_tls = j["tls"];
+            port = j["port"];
+        }catch(exception e){
+            spdlog::get("console")->error("Unable to read specified JSON File");
+            return 1;
+        }
     }
 
     // set port dynamically if not specified
@@ -102,10 +107,6 @@ int main(int argc, char* argv[]) {
             port = 110;
         }
     }
-
-    // set up spdlog
-    auto console = spdlog::stdout_color_mt("console");
-    auto logger = spdlog::basic_logger_mt("logger", "logs/basic-log.txt");
 
     spdlog::get("logger")->info("Starting POP3 Client");
 
@@ -143,7 +144,8 @@ int main(int argc, char* argv[]) {
 
     ProtoInterface proto(ref(c));
 
-    std::thread t([&](){
+    // Initialize gRPC Server in Lambda Thread
+    std::thread grpc_serv([&](){
         POP3CSImplementation service(ref(proto));
         std::string server_address("0.0.0.0:50051");
 
@@ -151,11 +153,9 @@ int main(int argc, char* argv[]) {
         builder.AddListeningPort(server_address, grpc::InsecureServerCredentials());
         builder.RegisterService(&service);
         std::unique_ptr<grpc::Server> server(builder.BuildAndStart());
-        std::cout << "Server listening on " << server_address << std::endl;
+        spdlog::get("console")->info("Server listening on {}", server_address);
         server->Wait();
     });
-
-    usleep(100000);
 
     /*
     pop3msg::MailList res = client.retrieve_messages("ls", 10);
@@ -163,14 +163,14 @@ int main(int argc, char* argv[]) {
     cout << res.mails(1).from() << endl;
     client.retrieve_messages("dl", 5);
     client.delete_message("rm", 5);
-    client.disconnect("exit");*/
-
+    client.disconnect("exit");
+    */
 
     // INTERACTIVE SHELL
-
+    usleep(10000);
+    
     if(enable_interactive){
         std::string address("localhost:50051");
-
         POP3CSClient client(
             grpc::CreateChannel(
                 address, 
@@ -178,14 +178,14 @@ int main(int argc, char* argv[]) {
             )
         );
 
-
         Interactive shell(ref(client));
         shell.run();
     }else{
         c.quit();
     }
 
-    t.join();
+    // join grpc server
+    grpc_serv.join();
 
     return 0;
 }

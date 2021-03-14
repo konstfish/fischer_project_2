@@ -244,11 +244,9 @@ int POP3client::delete_message(int message_id){
     vector<string> res_vec = utility.split(res, " ");
     
     if(res_vec[0] != "+OK"){
-        spdlog::get("console")->info("Unable to delete message with ID: {}", message_id);
         spdlog::get("logger")->info("Unable to delete message with ID: {}", message_id);
         return 1;
     }else{
-        spdlog::get("console")->info("Deleted message with ID: {}", message_id);
         spdlog::get("logger")->info("Deleted message with ID: {}", message_id);
     }
 
@@ -363,11 +361,9 @@ int POP3client::save_mail(int message_id){
 
     check = utility.email_to_file(email, res_vec[1]);
     if(check){
-        spdlog::get("console")->info("Unable to save message with ID: {} as {}", message_id, res_vec[1]);
         spdlog::get("logger")->info("Unable to save message with ID: {} as {}", message_id, res_vec[1]);
         return 1;
     }else{
-        spdlog::get("console")->info("Saved message with ID: {} as {}", message_id, res_vec[1]);
         spdlog::get("logger")->info("Saved message with ID: {} as {}", message_id, res_vec[1]);
     }
 

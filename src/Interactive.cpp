@@ -38,7 +38,12 @@ int Interactive::run(){
             if(arg_int == -1){
                 spdlog::get("console")->warn("Argument not valid");
             }else{
-                client.save_mail(cmd, arg_int);
+                pop3msg::Success suc = client.save_mail(cmd, arg_int);
+                if(suc.valid()){
+                    spdlog::get("console")->info("Unable to save message with ID: {}", suc.message_id());
+                }else{
+                    spdlog::get("console")->info("Saved message with ID: {}", suc.message_id());
+                }
             }
         }
 
@@ -46,7 +51,12 @@ int Interactive::run(){
             if(arg_int == -1){
                 spdlog::get("console")->warn("Argument not valid");
             }else{
-                client.delete_message(cmd, arg_int);
+                pop3msg::Success suc = client.delete_message(cmd, arg_int);
+                if(suc.valid()){
+                    spdlog::get("console")->info("Unable to delete message with ID: {}", suc.message_id());
+                }else{
+                    spdlog::get("console")->info("Deleted message with ID: {}", suc.message_id());
+                }
             }
         }
 
