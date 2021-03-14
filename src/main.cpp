@@ -157,34 +157,35 @@ int main(int argc, char* argv[]) {
 
     usleep(100000);
 
-    std::string address("0.0.0.0:50051");
-
-    POP3CSClient client(
-        grpc::CreateChannel(
-            address, 
-            grpc::InsecureChannelCredentials()
-        )
-    );
-
+    /*
     pop3msg::MailList res = client.retrieve_messages("ls", 10);
     cout << res.mails_size()  << endl;
     cout << res.mails(1).from() << endl;
     client.retrieve_messages("dl", 5);
     client.delete_message("rm", 5);
-    client.disconnect("exit");
+    client.disconnect("exit");*/
 
-    t.join();
 
     // INTERACTIVE SHELL
 
     if(enable_interactive){
-        Interactive shell(ref(c));
+        std::string address("localhost:50051");
+
+        POP3CSClient client(
+            grpc::CreateChannel(
+                address, 
+                grpc::InsecureChannelCredentials()
+            )
+        );
+
+
+        Interactive shell(ref(client));
         shell.run();
     }else{
         c.quit();
     }
 
-
+    t.join();
 
     return 0;
 }

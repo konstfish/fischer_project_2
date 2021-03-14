@@ -9,17 +9,23 @@ catnr:  03
 
 #pragma once
 
+#include <grpc/grpc.h>
+
 #include "POP3client.h"
+#include "ProtoInterface.h"
+
+#include "pop3.grpc.pb.h"
 
 class Interactive{
     private:
-    POP3client &client;
+    POP3CSClient &client;
 
     void parse_input(std::string &c, std::string &a, std::string inp);
     int parse_integer(std::string arg);
+    void print_messages(pop3msg::MailList ml);
 
     public:
-    Interactive(POP3client &c):client( c ){};
+    Interactive(POP3CSClient &c):client( c ){};
 
     int run();
 };

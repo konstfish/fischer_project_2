@@ -18,6 +18,7 @@
 - Update meson.build file
 - Add a few sections to README.md
 - Update meson.build to feature grpc
+- Rewrote Interactive Class to use gRPC client as communication medium
 ** [0.0.4] - 2020-03-08
 *** Added
 - Add basic socket to pop3client Class

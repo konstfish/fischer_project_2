@@ -38,7 +38,7 @@ int Interactive::run(){
             if(arg_int == -1){
                 spdlog::get("console")->warn("Argument not valid");
             }else{
-                client.save_mail(arg_int);
+                client.save_mail(cmd, arg_int);
             }
         }
 
@@ -46,7 +46,7 @@ int Interactive::run(){
             if(arg_int == -1){
                 spdlog::get("console")->warn("Argument not valid");
             }else{
-                client.delete_message(arg_int);
+                client.delete_message(cmd, arg_int);
             }
         }
 
@@ -57,12 +57,13 @@ int Interactive::run(){
             if(arg_int == -1){
                 spdlog::get("console")->warn("Argument not valid");
             }else{
-                client.retrieve_messages(arg_int);
+                pop3msg::MailList ml = client.retrieve_messages(cmd, arg_int);
+                print_messages(ml);
             }
         }
 
         if(cmd == "exit"){
-            client.quit();
+            client.disconnect(cmd);
             return 1;
         }
 
@@ -109,4 +110,33 @@ void Interactive::parse_input(string &c, string &a, string inp){
 
         i += 1;
     }
+}
+
+void Interactive::print_messages(pop3msg::MailList ml){
+    int size = ml.mails_size();
+    int i = 0;
+
+    tabulate::Table emails;
+
+    emails.add_row({"Message ID", 
+                        "Recieved From", 
+                        "Subject",
+                        "Date"});
+
+    while(i < size){
+        int mid = ml.mails(i).message_id();
+        string message_id = to_string(mid);
+        string from = ml.mails(i).from();
+        string subject = ml.mails(i).subject();
+        string date = ml.mails(i).date();
+
+        emails.add_row({message_id, 
+                        from, 
+                        subject,
+                        date});
+
+        i += 1;
+    }
+    cout << emails << endl;
+
 }

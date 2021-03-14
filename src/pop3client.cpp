@@ -287,7 +287,7 @@ vector<vector<string>> POP3client::retrieve_messages(int amount){
         i += 1;
     }
 
-    utility.print_messages(messages);
+    // utility.print_messages(messages);
 
     return messages;
 }
@@ -347,10 +347,10 @@ int POP3client::quit(){
     }else{
         spdlog::get("console")->info("Error while quitting Session!");
         spdlog::get("logger")->info("Error while quitting Session!");
-        return 1;
+        exit(1);
     }
 
-    return 0;
+    exit(0);
 }
 
 int POP3client::save_mail(int message_id){

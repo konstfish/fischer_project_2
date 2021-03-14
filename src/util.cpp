@@ -91,6 +91,7 @@ bool POP3client_utils::ends_with(string s, string suffix)
     return s.size() >= suffix.size() && s.rfind(suffix) == (s.size()-suffix.size());
 }
 
+/*
 void POP3client_utils::print_messages(vector<vector<string>> messages){
     int size = messages.size();
     int i = 0;
@@ -118,4 +119,4 @@ void POP3client_utils::print_messages(vector<vector<string>> messages){
     }
     cout << emails << endl;
 
-}
+}*/
