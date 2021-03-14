@@ -81,8 +81,8 @@ int main(int argc, char* argv[]) {
     }
 
     // Prase json, if specified
-    if(jsonfile != ""){
-        try{
+    if(jsonfile != "") {
+        try {
             std::ifstream i(jsonfile);
             json j;
             i >> j;

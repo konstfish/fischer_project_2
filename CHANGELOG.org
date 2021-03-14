@@ -22,6 +22,7 @@
 - Rewrote Interactive Class to use gRPC client as communication medium
 - Clean up ProtoInterface.h
 - Move Console spdlog entries to Interactive class
+- Implement changes from "Zwischenstand"
 ** [0.0.4] - 2020-03-08
 *** Added
 - Add basic socket to pop3client Class

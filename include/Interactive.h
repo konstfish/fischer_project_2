@@ -18,14 +18,14 @@ catnr:  03
 
 class Interactive{
     private:
-    POP3CSClient &client;
+        POP3CSClient &client;
 
-    void parse_input(std::string &c, std::string &a, std::string inp);
-    int parse_integer(std::string arg);
-    void print_messages(pop3msg::MailList ml);
+        void parse_input(std::string &c, std::string &a, std::string inp);
+        int parse_integer(std::string arg);
+        void print_messages(pop3msg::MailList ml);
 
     public:
-    Interactive(POP3CSClient &c):client( c ){};
+        Interactive(POP3CSClient &c):client( c ){};
 
-    int run();
+        int run();
 };

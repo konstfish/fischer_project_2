@@ -19,12 +19,8 @@ catnr:  03
 #include <tabulate/table.hpp>
 
 class POP3client_utils{
-    private:
-
     public:
-        POP3client_utils(){
-
-        };
+        POP3client_utils(){};
 
         int email_to_file(std::string write, std::string subject);
 
