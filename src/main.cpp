@@ -142,9 +142,6 @@ int main(int argc, char* argv[]) {
     // ProtoServer
 
     ProtoInterface proto(ref(c));
-    /*pop3msg::MailList temp =  proto.retrieve_messages(10);
-    cout << temp.mails_size() << endl;
-    cout << temp.mails(1).from() << endl;*/
 
     std::thread t([&](){
         POP3CSImplementation service(ref(proto));
@@ -172,10 +169,11 @@ int main(int argc, char* argv[]) {
     pop3msg::MailList res = client.retrieve_messages("ls", 10);
     cout << res.mails_size()  << endl;
     cout << res.mails(1).from() << endl;
+    client.retrieve_messages("dl", 5);
+    client.delete_message("rm", 5);
+    client.disconnect("exit");
 
     t.join();
-
-    //proto.run("0.0.0.0:5000");
 
     // INTERACTIVE SHELL
 

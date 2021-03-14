@@ -31,7 +31,7 @@ int ProtoInterface::retrieve_message_meta_proto(int message_id, pop3msg::MailMet
     return 0;
 }
 
-void ProtoInterface::retrieve_messages(pop3msg::MailList* temp_mail_list, int amount){
+int ProtoInterface::retrieve_messages(pop3msg::MailList *temp_mail_list, int amount){
     int total_messages = client.get_total_messages();
 
     if(amount > total_messages){
@@ -60,42 +60,32 @@ void ProtoInterface::retrieve_messages(pop3msg::MailList* temp_mail_list, int am
 
         i += 1;
     }
+
+    return 0;
 }
 
-pop3msg::Success ProtoInterface::save_mail(int message_id){
-    pop3msg::Success temp_suc;
-
+int ProtoInterface::save_mail(pop3msg::Success *suc, int message_id){
     int check = client.save_mail(message_id);
 
-    temp_suc.set_message_id(message_id);
-    temp_suc.set_valid(check);
+    suc->set_message_id(message_id);
+    suc->set_valid(check);
 
-    return temp_suc;
+    return check;
 }
 
-pop3msg::Success ProtoInterface::delete_message(int message_id){
-    pop3msg::Success temp_suc;
-
+int ProtoInterface::delete_message(pop3msg::Success *suc, int message_id){
     int check = client.delete_message(message_id);
 
-    temp_suc.set_message_id(message_id);
-    temp_suc.set_valid(check);
+    suc->set_message_id(message_id);
+    suc->set_valid(check);
 
-    return temp_suc;
+    return check;
 }
 
-/*
-void run(string addr){
-    
-    POP3CSImplementation service;
+int ProtoInterface::disconnect(pop3msg::Success *suc){
+    int check = client.quit();
 
-    ServerBuilder builder;
+    suc->set_valid(check);
 
-    builder.AddListeningPort(addr, grpc::InsecureServerCredentials());
-    builder.RegisterService(&service);
-
-    std::unique_ptr<Server> server(builder.BuildAndStart());
-    std::cout << "Server listening on port: " << addr << std::endl;
-
-    server->Wait();
-}*/
+    return check;
+}

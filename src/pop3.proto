@@ -7,9 +7,11 @@ package pop3msg;
 service POP3CS {
     rpc get_mail_list(Operation) returns (MailList) {}
 
-    rpc delete_mail(Operation) returns (Success) {}
+    rpc delete_message(Operation) returns (Success) {}
 
     rpc save_mail(Operation) returns (Success) {}
+
+    rpc disconnect(Operation) returns (Success) {}
 }
 
 message MailMeta {

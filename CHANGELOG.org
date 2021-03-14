@@ -11,6 +11,9 @@
 - Include grpc Library
 - Add grpc Server Class
 - Add grpc Client Class
+- Add grpc routes to pop3.proto
+- Add grpc routes to Server Class
+- Add grpc routes to Client Class
 ***  Changed
 - Update meson.build file
 - Add a few sections to README.md

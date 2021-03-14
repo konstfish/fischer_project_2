@@ -23,10 +23,12 @@ class ProtoInterface{
     ProtoInterface(POP3client &c):client( c ){};
 
     int retrieve_message_meta_proto(int message_id, pop3msg::MailMeta *temp_mail_meta);
-    void retrieve_messages(pop3msg::MailList* ml, int amount);
+    int retrieve_messages(pop3msg::MailList *ml, int amount);
 
-    pop3msg::Success delete_message(int message_id);
-    pop3msg::Success save_mail(int message_id);
+    int delete_message(pop3msg::Success *suc, int message_id);
+    int save_mail(pop3msg::Success *suc, int message_id);
+
+    int disconnect(pop3msg::Success *suc);
 };
 
 class POP3CSImplementation final : public pop3msg::POP3CS::Service {
@@ -41,14 +43,40 @@ class POP3CSImplementation final : public pop3msg::POP3CS::Service {
         const pop3msg::Operation* operation, 
         pop3msg::MailList* reply
     ) override {
-
-        //reply->set_result(a * b);
         protoi.retrieve_messages(reply, operation->arg());
 
-        std::cout << reply->mails_size() << std::endl;
+        return grpc::Status::OK;
+    };
+
+    grpc::Status save_mail(
+        grpc::ServerContext* context, 
+        const pop3msg::Operation* operation, 
+        pop3msg::Success* reply
+    ) override {
+        protoi.save_mail(reply, operation->arg());
 
         return grpc::Status::OK;
-    } 
+    };
+
+    grpc::Status delete_message(
+        grpc::ServerContext* context, 
+        const pop3msg::Operation* operation, 
+        pop3msg::Success* reply
+    ) override {
+        protoi.delete_message(reply, operation->arg());
+
+        return grpc::Status::OK;
+    };
+
+    grpc::Status disconnect(
+        grpc::ServerContext* context, 
+        const pop3msg::Operation* operation, 
+        pop3msg::Success* reply
+    ) override {
+        protoi.disconnect(reply);
+
+        return grpc::Status::OK;
+    };
 };
 
 class POP3CSClient {
@@ -72,9 +100,51 @@ class POP3CSClient {
 
         grpc::Status status = stub_->get_mail_list(&context, op, &ml);
 
-        std::cout << ml.mails_size() << std::endl;
-
         return ml;
+    }
+
+    pop3msg::Success delete_message(std::string cmd, int arg){
+        pop3msg::Operation op;
+
+        op.set_cmd(cmd);
+        op.set_arg(arg);
+
+        pop3msg::Success suc;
+
+        grpc::ClientContext context;
+
+        grpc::Status status = stub_->delete_message(&context, op, &suc);
+
+        return suc;
+    }
+
+    pop3msg::Success save_mail(std::string cmd, int arg){
+        pop3msg::Operation op;
+
+        op.set_cmd(cmd);
+        op.set_arg(arg);
+
+        pop3msg::Success suc;
+
+        grpc::ClientContext context;
+
+        grpc::Status status = stub_->save_mail(&context, op, &suc);
+
+        return suc;
+    }
+
+    pop3msg::Success disconnect(std::string cmd){
+        pop3msg::Operation op;
+
+        op.set_cmd(cmd);
+
+        pop3msg::Success suc;
+
+        grpc::ClientContext context;
+
+        grpc::Status status = stub_->disconnect(&context, op, &suc);
+
+        return suc;
     }
 
 };
