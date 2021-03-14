@@ -35,11 +35,7 @@
 - Include tablulate Library in util.h
 - Add quit funtion to pop3client class (gracefully ends sessions)
 - Add ends_with funtion to utils 
-- Add read_to_end function to pop3client class (reads messages larger than 8000 chars) 
-*** Changed
-- Split temp function into establish_connection & debug functions
-- Fixed output in pop3client_utils::print_messages
-- Cleaned up save_mail funtion (now saves complete emails as .eml files with the emails subject as file name)
+- Add read_to_end function to pop3client class (reads messages larger than 8000 chars)
 - Include CLI11 Library in main.cpp
 - Add simple CLA handling
 - Include JSON Library in main.cpp
@@ -49,12 +45,17 @@
 - Add Interactive.h & Interactive.cpp
 - Add Interactive class to handle responsive input of commands
 - Add CLA to enable Interactive shell
+*** Changed
+- Split temp function into establish_connection & debug functions
+- Fixed output in pop3client_utils::print_messages
+- Cleaned up save_mail funtion (now saves complete emails as .eml files with the emails subject as file name)
+- Update Naming Scheme
+- Update retrieve_messages function. Now works when messages are marked for deletion
+- Update Naming Scheme
+- Update retrieve_messages function. Now works when messages are marked for deletion
 *** Removed
 - Remove subprocess attempt
 - Remove backup folder, as it no longer holds any importance
-*** Changed
-- Update Naming Scheme
-- Update retrieve_messages function. Now works when messages are marked for deletion
 ** [0.0.3] - 2020-03-01
 *** Added
 - Add Time Tracking Badge to README
