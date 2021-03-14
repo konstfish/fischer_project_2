@@ -1,5 +1,7 @@
 syntax = "proto2";
 
+option java_package = "ex.grpc";
+
 package pop3msg;
 
 service POP3CS {
@@ -28,5 +30,5 @@ message Success {
 
 message Operation {
     optional string cmd = 1;
-    optional string arg = 2;
+    optional int32 arg = 2;
 }

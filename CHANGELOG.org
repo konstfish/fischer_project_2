@@ -8,9 +8,13 @@
 - Add protobuff build to meson
 - Add ProtoInterface class
 - Add ProtoBuff handler functions
+- Include grpc Library
+- Add grpc Server Class
+- Add grpc Client Class
 ***  Changed
 - Update meson.build file
 - Add a few sections to README.md
+- Update meson.build to feature grpc
 ** [0.0.4] - 2020-03-08
 *** Added
 - Add basic socket to pop3client Class

@@ -20,6 +20,11 @@ catnr:  03
 #include <spdlog/sinks/stdout_color_sinks.h>
 #include "spdlog/sinks/basic_file_sink.h"
 
+#include <grpc/grpc.h>
+#include <grpcpp/server.h>
+#include <grpcpp/server_builder.h>
+#include <grpcpp/server_context.h>
+
 #include <iostream>
 
 using namespace std;
@@ -137,9 +142,40 @@ int main(int argc, char* argv[]) {
     // ProtoServer
 
     ProtoInterface proto(ref(c));
-    pop3msg::MailList temp =  proto.retrieve_messages(10);
+    /*pop3msg::MailList temp =  proto.retrieve_messages(10);
     cout << temp.mails_size() << endl;
-    cout << temp.mails(1).from() << endl;
+    cout << temp.mails(1).from() << endl;*/
+
+    std::thread t([&](){
+        POP3CSImplementation service(ref(proto));
+        std::string server_address("0.0.0.0:50051");
+
+        grpc::ServerBuilder builder;
+        builder.AddListeningPort(server_address, grpc::InsecureServerCredentials());
+        builder.RegisterService(&service);
+        std::unique_ptr<grpc::Server> server(builder.BuildAndStart());
+        std::cout << "Server listening on " << server_address << std::endl;
+        server->Wait();
+    });
+
+    usleep(100000);
+
+    std::string address("0.0.0.0:50051");
+
+    POP3CSClient client(
+        grpc::CreateChannel(
+            address, 
+            grpc::InsecureChannelCredentials()
+        )
+    );
+
+    pop3msg::MailList res = client.retrieve_messages("ls", 10);
+    cout << res.mails_size()  << endl;
+    cout << res.mails(1).from() << endl;
+
+    t.join();
+
+    //proto.run("0.0.0.0:5000");
 
     // INTERACTIVE SHELL
 
