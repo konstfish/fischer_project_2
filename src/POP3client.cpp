@@ -56,14 +56,6 @@ int POP3client::establish_connection(){
     return 0;
 }
 
-void POP3client::debug(){    
-    /*write("RETR 1");
-    read();*/
-
-    //write("RETR 5");
-    //utility.email_to_file(read_to_end());
-}
-
 // https://stackoverflow.com/questions/52727565/client-in-c-use-gethostbyname-or-getaddrinfo
 // https://stackoverflow.com/questions/38002016/problems-with-gethostbyname-c
 int POP3client::resolve() {

@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Bouml (http://bouml.free.fr/) -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="561" height="578" version="1.1" xmlns="http://www.w3.org/2000/svg">
+<g>
+	<rect fill="#cbcbcb" stroke="none" stroke-opacity="1" x="339" y="192" width="3" height="83" />
+	<rect fill="#cbcbcb" stroke="none" stroke-opacity="1" x="245" y="272" width="97" height="3" />
+	<rect fill="#ffffc0" stroke="black" stroke-width="1" stroke-opacity="1" x="241" y="188" width="98" height="84" />
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" font-weight="bold" text-anchor="middle" x="290" y="200">POP3client_utils</text>
+	<line stroke="black" stroke-opacity="1" x1="241" y1="202" x2="339" y2="202" />
+	<line stroke="black" stroke-opacity="1" x1="241" y1="210" x2="339" y2="210" />
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" font-weight="bold" x="245" y="222">+</text>
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" x="256" y="222">POP3client_utils()</text>
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" font-weight="bold" x="245" y="234">+</text>
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" x="256" y="234">email_to_file()</text>
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" font-weight="bold" x="245" y="246">+</text>
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" x="256" y="246">split()</text>
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" font-weight="bold" x="245" y="258">+</text>
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" x="256" y="258">split_message()</text>
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" font-weight="bold" x="245" y="270">+</text>
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" x="256" y="270">ends_with()</text>
+</g>
+<g>
+	<rect fill="#cbcbcb" stroke="none" stroke-opacity="1" x="202" y="470" width="3" height="95" />
+	<rect fill="#cbcbcb" stroke="none" stroke-opacity="1" x="46" y="562" width="159" height="3" />
+	<rect fill="#ffffc0" stroke="black" stroke-width="1" stroke-opacity="1" x="42" y="466" width="160" height="96" />
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" font-weight="bold" text-anchor="middle" x="122" y="478">ProtoInterface</text>
+	<line stroke="black" stroke-opacity="1" x1="42" y1="480" x2="202" y2="480" />
+	<line stroke="black" stroke-opacity="1" x1="42" y1="488" x2="202" y2="488" />
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" font-weight="bold" x="46" y="500">+</text>
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" x="57" y="500">ProtoInterface()</text>
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" font-weight="bold" x="46" y="512">+</text>
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" x="57" y="512">retrieve_message_meta_proto()</text>
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" font-weight="bold" x="46" y="524">+</text>
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" x="57" y="524">retrieve_messages()</text>
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" font-weight="bold" x="46" y="536">+</text>
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" x="57" y="536">delete_message()</text>
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" font-weight="bold" x="46" y="548">+</text>
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" x="57" y="548">save_mail()</text>
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" font-weight="bold" x="46" y="560">+</text>
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" x="57" y="560">disconnect()</text>
+</g>
+<g>
+	<rect fill="#cbcbcb" stroke="none" stroke-opacity="1" x="545" y="42" width="3" height="89" />
+	<rect fill="#cbcbcb" stroke="none" stroke-opacity="1" x="439" y="128" width="109" height="3" />
+	<rect fill="#ffffc0" stroke="black" stroke-width="1" stroke-opacity="1" x="435" y="38" width="110" height="90" />
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" font-weight="bold" text-anchor="middle" x="490" y="50">POP3CSClient</text>
+	<line stroke="black" stroke-opacity="1" x1="435" y1="52" x2="545" y2="52" />
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" font-weight="bold" x="439" y="64">-</text>
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" x="450" y="64">stub_</text>
+	<line stroke="black" stroke-opacity="1" x1="435" y1="66" x2="545" y2="66" />
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" font-weight="bold" x="439" y="78">+</text>
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" x="450" y="78">POP3CSClient()</text>
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" font-weight="bold" x="439" y="90">+</text>
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" x="450" y="90">retrieve_messages()</text>
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" font-weight="bold" x="439" y="102">+</text>
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" x="450" y="102">delete_message()</text>
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" font-weight="bold" x="439" y="114">+</text>
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" x="450" y="114">save_mail()</text>
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" font-weight="bold" x="439" y="126">+</text>
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" x="450" y="126">disconnect()</text>
+</g>
+<g>
+	<rect fill="#cbcbcb" stroke="none" stroke-opacity="1" x="347" y="45" width="3" height="83" />
+	<rect fill="#cbcbcb" stroke="none" stroke-opacity="1" x="255" y="125" width="95" height="3" />
+	<rect fill="#ffffc0" stroke="black" stroke-width="1" stroke-opacity="1" x="251" y="41" width="96" height="84" />
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" font-weight="bold" text-anchor="middle" x="299" y="53">Interactive</text>
+	<line stroke="black" stroke-opacity="1" x1="251" y1="55" x2="347" y2="55" />
+	<line stroke="black" stroke-opacity="1" x1="251" y1="63" x2="347" y2="63" />
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" font-weight="bold" x="255" y="75">-</text>
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" x="266" y="75">parse_input()</text>
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" font-weight="bold" x="255" y="87">-</text>
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" x="266" y="87">parse_integer()</text>
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" font-weight="bold" x="255" y="99">-</text>
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" x="266" y="99">print_messages()</text>
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" font-weight="bold" x="255" y="111">+</text>
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" x="266" y="111">Interactive()</text>
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" font-weight="bold" x="255" y="123">+</text>
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" x="266" y="123">run()</text>
+</g>
+<g>
+	<line stroke="black" stroke-opacity="1" x1="434" y1="85" x2="428" y2="79" />
+	<line stroke="black" stroke-opacity="1" x1="434" y1="85" x2="428" y2="91" />
+	<line stroke="black" stroke-opacity="1" x1="351" y1="85" x2="434" y2="85" />
+</g>
+<g>
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" x="397" y="82">-client</text>
+</g>
+<g>
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" x="204" y="229">-utility</text>
+</g>
+<g>
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" x="129" y="444">-client</text>
+</g>
+<g>
+	<rect fill="#cbcbcb" stroke="none" stroke-opacity="1" x="194" y="39" width="3" height="389" />
+	<rect fill="#cbcbcb" stroke="none" stroke-opacity="1" x="46" y="425" width="151" height="3" />
+	<rect fill="#ffffc0" stroke="black" stroke-width="1" stroke-opacity="1" x="42" y="35" width="152" height="390" />
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" font-weight="bold" text-anchor="middle" x="118" y="47">POP3client</text>
+	<line stroke="black" stroke-opacity="1" x1="42" y1="49" x2="194" y2="49" />
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" font-weight="bold" x="46" y="61">-</text>
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" x="57" y="61">end_signal</text>
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" font-weight="bold" x="46" y="73">-</text>
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" x="57" y="73">hostname</text>
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" font-weight="bold" x="46" y="85">-</text>
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" x="57" y="85">port</text>
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" font-weight="bold" x="46" y="97">-</text>
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" x="57" y="97">ipaddr</text>
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" font-weight="bold" x="46" y="109">-</text>
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" x="57" y="109">addrfamily</text>
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" font-weight="bold" x="46" y="121">-</text>
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" x="57" y="121">sa</text>
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" font-weight="bold" x="46" y="133">-</text>
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" x="57" y="133">sd</text>
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" font-weight="bold" x="46" y="145">-</text>
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" x="57" y="145">socket_established</text>
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" font-weight="bold" x="46" y="157">-</text>
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" x="57" y="157">tls</text>
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" font-weight="bold" x="46" y="169">-</text>
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" x="57" y="169">xcred</text>
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" font-weight="bold" x="46" y="181">-</text>
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" x="57" y="181">gnutls_sd</text>
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" font-weight="bold" x="46" y="193">-</text>
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" x="57" y="193">tls_established</text>
+	<line stroke="black" stroke-opacity="1" x1="42" y1="195" x2="194" y2="195" />
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" font-weight="bold" x="46" y="207">-</text>
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" x="57" y="207">socket_setup()</text>
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" font-weight="bold" x="46" y="219">-</text>
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" x="57" y="219">resolve()</text>
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" font-weight="bold" x="46" y="231">-</text>
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" x="57" y="231">gnutls_setup()</text>
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" font-weight="bold" x="46" y="243">-</text>
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" x="57" y="243">gnutls_destruction()</text>
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" font-weight="bold" x="46" y="255">-</text>
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" x="57" y="255">socket_destruction()</text>
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" font-weight="bold" x="46" y="267">+</text>
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" x="57" y="267">POP3client()</text>
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" font-weight="bold" x="46" y="279">+</text>
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" x="57" y="279">~POP3client()</text>
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" font-weight="bold" x="46" y="291">+</text>
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" x="57" y="291">establish_connection()</text>
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" font-weight="bold" x="46" y="303">+</text>
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" x="57" y="303">login()</text>
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" font-weight="bold" x="46" y="315">+</text>
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" x="57" y="315">quit()</text>
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" font-weight="bold" x="46" y="327">+</text>
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" x="57" y="327">read()</text>
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" font-weight="bold" x="46" y="339">+</text>
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" x="57" y="339">read_to_str()</text>
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" font-weight="bold" x="46" y="351">+</text>
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" x="57" y="351">read_to_end()</text>
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" font-weight="bold" x="46" y="363">+</text>
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" x="57" y="363">write()</text>
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" font-weight="bold" x="46" y="375">+</text>
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" x="57" y="375">get_total_messages()</text>
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" font-weight="bold" x="46" y="387">+</text>
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" x="57" y="387">delete_message()</text>
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" font-weight="bold" x="46" y="399">+</text>
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" x="57" y="399">retrieve_message_metadata()</text>
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" font-weight="bold" x="46" y="411">+</text>
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" x="57" y="411">retrieve_messages()</text>
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" font-weight="bold" x="46" y="423">+</text>
+	<text font-family="Helvetica" font-size="10" fill="#000000" xml:space="preserve" x="57" y="423">save_mail()</text>
+</g>
+<g>
+	<line stroke="black" stroke-opacity="1" x1="240" y1="232" x2="234" y2="226" />
+	<line stroke="black" stroke-opacity="1" x1="240" y1="232" x2="234" y2="238" />
+	<line stroke="black" stroke-opacity="1" x1="198" y1="232" x2="240" y2="232" />
+	<polygon fill="#000000" stroke="black" stroke-opacity="1" points="198,232 204,226 210,232 204,238" />
+</g>
+<g>
+	<line stroke="black" stroke-opacity="1" x1="119" y1="429" x2="113" y2="435" />
+	<line stroke="black" stroke-opacity="1" x1="119" y1="429" x2="125" y2="435" />
+	<line stroke="black" stroke-opacity="1" x1="119" y1="465" x2="119" y2="429" />
+</g>
+</svg>

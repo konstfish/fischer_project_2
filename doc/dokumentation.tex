@@ -17,8 +17,8 @@
 
 \graphicspath{{images/}}
 
-\title{Simpler POP3 Client mit TLS Support}
-\author{David Fischer, 5CHIF}
+\title{Simpler POP3 Client mit TLS Support (29)}
+\author{David Fischer (03), 5CHIF}
 \date{April 2021}
 
 \begin{document}
@@ -31,35 +31,241 @@
 \newpage
 
 \section{Einleitung}
+Laut Angabe war das Ziel dieser Aufgabe einen POP3 Client inklusive Unterstützung für GnuTLS\cite{gnutls} zu erstellen.
 
-\subsection{Problematik}
+\section{Klassendiagramm}
 
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=.7\textwidth]{kdg.png}
+  \caption{Klassendiagramm}
+  \label{fig:kdg}
+\end{figure}
 
 \section{Implementierung}
+Für Variablen sowie Funktionen wurde "Snake case" benutzt. Sämtliche vorgegebene Codierungskonventionen wurden nach Möglichkeit eingehalten. Um sämtliche Teile des Programmes zu vereinfachen, wurden mehrere externe Bibliotheken verwendet, diese sind in Sektion \ref{extBib} kurz beschrieben. 
 
-\subsection{Kurze Beschreibung diverser Codeblöcke}
+\subsection{POP3 Protokoll}
+Das Post Office Protocol (POP) ist ein Übertragungsprotokoll, mit welchem Clients die Möglichkeit haben E-Mails von einem E-Mail Server herunterzuladen. Version 3 (POP3) des Protokolls wird im RFC 1939\cite{rfc1939} beschrieben. 
 
+\subsubsection{POP3 Commands}
+
+\paragraph{USER [username]}
+Erster Login-Command. Erlaubt es dem Client einen User anzugeben.
+
+\paragraph{PASS [password]}
+Zweiter Login-Command. Erlaubt es dem Client ein Passwort für den User anzugeben.
+
+\paragraph{STAT}
+Gibt die Anzahl von E-Mails und deren totale Größe zurück.
+
+\paragraph{LIST}
+Gibt die einzelnen E-Mails und deren Größe zurück.
+
+\paragraph{RETR [message]}
+Gibt ein gesammtes E-Mail zurück.
+
+\paragraph{TOP [message]}
+Gibt die Metadaten eines E-Mails zurück.
+
+\paragraph{DELE [message]}
+Löscht ein E-Mail.
+
+\paragraph{RSET [message]}
+Macht das löschen eines E-Mails rückgängig.
+
+\paragraph{RSET [message]}
+Macht das löschen eines E-Mails rückgängig.
+
+\paragraph{NOOP}
+POP3 Server gibt eine Nachricht zurück. Dient nur als Test-Command.
+
+\paragraph{QUIT}
+Beendet die Session und speichtert getroffene Änderungen.
+
+\section{Kurze Beschreibung diverser Codeblöcke}
+
+\subsection{POP3}
+
+\subsubsection{Auflösen einer Domain}
+
+Die verwendung der asio Bibliothek war in diesem Projekt leider nicht möglich, daher werden die Domains mit Funktionen aus der <netdb.h> C Bibliothek aufgelöst.
 
 \begin{code}
 \begin{minted}{cpp}
-// create vector of threads to store the nodes operator()() threads
-vector<thread> node_container;
-node_container.resize(no_of_nodes);
+int POP3client::resolve() {
+  hostent *rh = gethostbyname(hostname.c_str());
+  if(rh == NULL){
+      return 1;
+  }
 
-for (int cnt = 0; cnt < no_of_nodes; cnt++) {
-    Node tmp_node(cnt, ref(coord), opt);
-    node_container.at(cnt) = thread{tmp_node};
-}
+  in_addr **ipptr = (struct in_addr**)rh->h_addr_list;
 
-// join threads from node_container
-for( auto &t : node_container ) {
-    t.join();
+  addrfamily  = rh->h_addrtype;
+  ipaddr      = inet_ntoa(*ipptr[0]);
+  return 0;
 }
 \end{minted}
-\caption{Erstellen sowie Befüllen des node\_container Vectors.}
-\label{thread_vector_ref}
+\caption{Auflösen einer Domain ohne asio}
+\label{resolve_domain}
 \end{code}
 
+\newpage
+
+\subsubsection{Erstellen einer C Socket}
+
+Da die asio Bibliothek nur TLS über OpenSSL unterstützt wurde eine normale C Socket implementiert. 
+
+\begin{code}
+\begin{minted}{cpp}
+int POP3client::socket_setup(){
+  int err;
+
+  sd = socket(addrfamily, SOCK_STREAM, 0);
+  memset(&sa, '\0', sizeof(sa));
+
+  sa.sin_family = addrfamily;
+  sa.sin_port = htons(port);
+
+  inet_pton(addrfamily, ipaddr.c_str(), &sa.sin_addr);
+  err = connect(sd, (struct sockaddr *) &sa, sizeof(sa));
+
+  socket_established = true;
+  return 0;
+}
+\end{minted}
+\caption{Erstellen einer C Socket}
+\label{create_c_socket}
+\end{code}
+
+\subsubsection{Implementation von GnuTLS}
+\label{gnutls_implement_proj}
+Die Funktion aus dem Snippet \ref{create_gnutls} zeigt, wie die Socket aus \ref{create_c_socket} benutzt wird, um einen TLS Handshake zu initialisieren.
+
+\begin{code}
+\begin{minted}{cpp}
+int POP3client::gnutls_setup(){
+  // X.509 authentication is used
+  gnutls_global_init();
+  gnutls_certificate_allocate_credentials(&xcred);
+  gnutls_certificate_set_x509_system_trust(xcred);
+
+  // link socket descriptor to gnutls socket descriptor
+  gnutls_transport_set_int(gnutls_sd, sd);
+
+  // initialize handshake
+  int err_handshake = gnutls_handshake(gnutls_sd);
+
+  if(err_handshake){
+      return 1;
+  }
+
+  return 0;
+}
+\end{minted}
+\caption{Gekürzte GnuTLS Setup Funktion}
+\label{create_gnutls}
+\end{code}
+
+\subsubsection{Lesen aus der Socket}
+
+Da der Großteil von den POP3 Funktionen mit einem Punkt, gefolgt von einem Absatz endet, ist es möglich größere Nachrichten zu lesen, indem man nach diesem End-Signal sucht.
+
+\begin{code}
+\begin{minted}{cpp}
+string POP3client::read_to_end(){
+  char buff[8000]{};
+  memset(buff, 0, sizeof(buff));
+
+  string key = ".\r\n";
+  string rec = "";
+  string tmp = "";
+
+  while(!utility.ends_with(tmp, key)){
+      if(tls){
+          gnutls_record_recv(gnutls_sd, buff, sizeof(buff));
+      } else {
+          recv(sd, buff, sizeof(buff), 0);
+      }
+      tmp = buff;
+      memset(buff, 0, sizeof(buff));
+
+      rec += tmp;
+  }
+  return rec;
+}
+\end{minted}
+\caption{Funktion, die aus der Socket liest, bis der key erreicht wird}
+\label{create_gnutls}
+\end{code}
+
+\subsubsection{Schreiben in die Socket}
+
+Um in die Socket zu schreiben werden Strings, die den Befehl enthalten, in Char Arrays umgewandelt. Diese werden, basierend darauf ob TLS verwendet wird mit der dementsprechenden Funktion in die Socket geschrieben.
+
+\begin{code}
+\begin{minted}{cpp}
+int POP3client::write(std::string msg){
+  msg = msg + "\n";
+  const char *cmsg = msg.c_str();
+  int msg_len = strlen(cmsg);
+
+  int result = 0;
+
+  if(tls){
+      result = gnutls_record_send(gnutls_sd, cmsg, msg_len);
+  } else {
+      result = send(sd, cmsg, msg_len, 0);
+  }
+
+  return result;
+}
+\end{minted}
+\caption{Funktion, die in die Socket schreibt}
+\label{create_gnutls}
+\end{code}
+
+\subsection{Protobuf und gRPC}
+\subsubsection{Protobuf}
+Protobuf\cite{protobuf} wurde implementiert um die verwendung von gRPC für den austausch von Daten zu ermöglichen.
+% TODO erläutern
+\begin{code}
+  \begin{minted}{c++}
+
+message MailMeta {
+  optional int32 message_id = 1;
+  optional string from = 2;
+  optional string subject = 3;
+  optional string date = 4;
+}
+
+message MailList {
+  repeated MailMeta mails = 1;
+}
+
+  \end{minted}
+  \caption{Protobuf Klassen für E-Mail Metadatan und eine Liste von diesen}
+\end{code}
+
+\subsubsection{gRPC}
+
+gRPC\cite{grpc}, auch bekannt als gRPC Remote Procedure Calls, wird benutzt als RPC system. gRPC benutzt HTTP/2 für den Transport und Protocol Buffer als die "interface description language."
+% todo erläutern
+\begin{code}
+  \begin{minted}{c++}
+service POP3CS {
+  rpc get_mail_list(Operation) returns (MailList) {}
+
+  rpc delete_message(Operation) returns (Success) {}
+  rpc save_mail(Operation) returns (Success) {}
+
+  rpc disconnect(Operation) returns (Success) {}
+}
+  \end{minted}
+  \caption{gRPC Routen}
+\end{code}
+
+Die "Interactive" Klasse benutzt den gRPC Client, um Daten des POP3 Servers über die "ProtoInterface" Klasse anzufragen.
 
 \subsection{Externe Bibliotheken}
 \label{extBib}
@@ -68,27 +274,93 @@ for( auto &t : node_container ) {
 CLI11\cite{cli11_ref} ermöglicht eine einfache Verarbeitung von Kommandozeilenargumenten mit eingebauten Methoden zum Überprüfen der angegebenen Werte. Auf diese Argumente wird in Sektion \ref{usage} näher eingegangen.
 
 \subsubsection{tabulate}
-Sobald das Programm vom Nutzer mittels $Ctrl+C$ abgebrochen wird, wird eine Tabelle mittels tabulate\cite{tabulate-ref} erstellt. Diese enthält diverse Informationen die während der Programmlaufzeit gesammelt wurden.
-Wenn die httplib Flag gesetzt ist, kann auf die Tabelle, wie in Paragraph \ref{get_ref} erwähnt, jederzeit zugegriffen werden.
+Um die E-Mails in einer optisch ansprechenden Art darzustellen, wird eine Tabelle mittels tabulate\cite{tabulate_ref} erstellt.
+
+\begin{code}
+  \begin{minted}{text}
+bubble> ls 3
++------------+----------------------+--------------------------------+
+| Message ID | Recieved From        | Subject                        | 
++------------+----------------------+--------------------------------+
+| 6          | David Fischer <...>  | Fwd: Linkedin ...              | 
++------------+----------------------+--------------------------------+
+| 5          | David Fischer <...>  | Fwd: Sie werden wahrgenommen!  |
++------------+----------------------+--------------------------------+
+| 4          | David Fischer <...>  | Fwd: DJI MSDK iOS Delay Notice |
++------------+----------------------+--------------------------------+
+  \end{minted}
+  \caption{Ausgabe des list Befehls}
+\end{code}
+
+\subsubsection{spdlog}
+Um Informationen zu loggen wird die spdlog\cite{spdlog_ref} Bibliothek verwendet. Die File Sink wird für genauere Details benutzt, während die Console Sink benutzt wird um die Arbeitsweise des Programms zu demonstrieren.
+
+\begin{code}
+\begin{minted}{cpp}
+auto console = spdlog::stdout_color_mt("console");
+auto logger = spdlog::basic_logger_mt("logger", "logs/basic-log.txt");
+\end{minted}
+\caption{Erstellen von spdlog Console und File Sinks}
+\label{create_gnutls}
+\end{code}
+
+\subsubsection{JSON}
+Um, wie in Sektion \ref{usage} angemerkt die Konfiguration aus einem JSON File zu lesen wird die JSON for modern C++\cite{json_ref} verwendet.
+
+\subsubsection{GnuTLS}
+Um GnuTLS zu implementieren wurde die C++ API verwendet\cite{gnutls_cpp}. Dies ist in Sektion \ref{gnutls_implement_proj} näher beschrieben.
 
 \section{Verwendung}
 \label{usage}
 
 \subsection{Kommandozeilenargumente}
-\subsubsection{Erforderlich}
 
-\paragraph{number}
-Nummer an Workerthread, die erstellt werden soll. Standardmäßig limitiert auf 2 bis 200. Sollte die -r Flagge gesetzt sein, ist die Limitation von 2 auf 10 reduziert.
+\subsubsection{Konfiguration}
+\paragraph{-s,--server}
+Domain des POP3 Servers
 
-\subsubsection{Optional}
-\paragraph{-o, --outage-simulation}
-Lässt Workerthreads mit einer 3 \% Chance pro Eintritt in den kritischen Abschnitt ausfallen, um einen Deadlock zu erzeugen. 
+\paragraph{-u,--user}
+Username des Accounts.
 
-\paragraph{-d, --outage-detection}
-Nur zulässig, wenn --outage-simulation auch gesetzt ist. Lässt den Koordinator 8 Sekunden auf die Node warten. Wenn nach dieser Zeit keine REL Anfrage eingeht, wird die Node aus der Queue entfernt.
+\paragraph{-p,--pass}
+Username des Accounts.
 
-\paragraph{-r, --requests}
-Lässt Kommunikation zwischen den Threads über HTTP laufen. Näher beschrieben in \ref{httplib_ref}.
+\paragraph{-t,--tls}
+Verbindung mittels TLS etablieren.
+
+\paragraph{--port}
+Benutzerdefinierten Port angeben.
+
+\paragraph{-j,--json}
+Configuration aus einem JSON File lesen
+
+\subsubsection{Befehle}
+\label{commands_lab}
+\paragraph{-d,--download}
+Einzelne E-Mail herunterladen und die Verbindung schließen.
+
+\paragraph{-r,--remove}
+Einzelne E-Mail löschen und die Verbindung schließen.
+
+\paragraph{-l,--list}
+E-Mails auflisten und die Verbindung schließen.
+
+\subsubsection{Interaktive Eingabe von Befehlen}
+\paragraph{-i,--interactive}
+Interaktive Eingabe von Befehlen aktivieren. Erlaubt es dem User alle Befehle aus Sektion \ref{commands_lab} zu verwenden.
+
+\begin{code}
+  \begin{minted}{text}
+bubble> help
+Bubble Interactive Client:
+dl / download <message_id>  - download email with id
+rm / delete <message_id>    - delete email with id
+ls / list <amount>          - list amount of mails
+exit                        - disconnects the session
+help                        - displays this message
+  \end{minted}
+  \caption{Ausgabe des help Befehls des Interaktiven Clients}
+\end{code}
 
 \newpage
 
@@ -99,20 +371,26 @@ Lässt Kommunikation zwischen den Threads über HTTP laufen. Näher beschrieben 
   .2 meson\_options.txt.
   .2 meson.build.
   .2 README.md.
+  .2 RESEARCH.md.
+  .2 CHANGELOG.org.
+  .2 config.json.
   .2 .gitignore.
   .2 include.
-  .3 utils.h.
-  .3 Node.h.
-  .3 Coordinator.h.
+  .3 Interactive.h.
+  .3 POP3client.h.
+  .3 ProtoInterface.h.
+  .3 Util.h.
   .2 src.
-  .3 utils.cpp.
-  .3 Node.cpp.
-  .3 Coordinator.cpp.
+  .3 Interactive.cpp.
   .3 main.cpp.
+  .3 pop3.proto.
+  .3 POP3cilent.cpp.
+  .3 ProtoInterface.cpp.
+  .3 Util.cpp.
   .2 doc.
-  .3 ausarbeitung.tex.
+  .3 dokumentation.tex.
   .3 references.bib.
-  .3 ausarbeitung.pdf.
+  .3 dokumentation.pdf.
   .2 build.
 }\hfill
 

@@ -15,6 +15,16 @@
 - Add grpc routes to Server Class
 - Add grpc routes to Client Class
 - Add error handling to JSON Parser
+- Add Introduction Section to Documentation
+- Add References to Documentation
+- Add Class Diagram to Documentation
+- Add Implementation Section to Documentation
+- Add Code Section to Documentation
+- Add Library Section to Documentation
+- Add grpc/protobuf Sections to Documentation
+- Add Usage Section to Documentation
+- Add Project Structure Section to Documentation
+- Add Usage example to README.md
 ***  Changed
 - Update meson.build file
 - Add a few sections to README.md

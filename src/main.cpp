@@ -45,7 +45,7 @@ int main(int argc, char* argv[]) {
     app.add_option("-p,--pass", password, "Account Password");
 
     bool use_tls{false};
-    app.add_flag("-t, --tls", use_tls, "Connect using TLS");
+    app.add_flag("-t,--tls", use_tls, "Connect using TLS");
 
     int port{-1};
     app.add_option("--port", port, "Specify custom port");
@@ -67,7 +67,7 @@ int main(int argc, char* argv[]) {
     // Enable interactive Shell
 
     bool enable_interactive{false};
-    app.add_flag("-i, --interactive", enable_interactive, "Enable Interactive Shell");
+    app.add_flag("-i,--interactive", enable_interactive, "Enable Interactive Shell");
 
     // set up spdlog
     auto console = spdlog::stdout_color_mt("console");
@@ -153,7 +153,7 @@ int main(int argc, char* argv[]) {
         builder.AddListeningPort(server_address, grpc::InsecureServerCredentials());
         builder.RegisterService(&service);
         std::unique_ptr<grpc::Server> server(builder.BuildAndStart());
-        spdlog::get("console")->info("Server listening on {}", server_address);
+        spdlog::get("console")->info("gRPC Server listening on {}", server_address);
         server->Wait();
     });
 

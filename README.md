@@ -45,3 +45,39 @@ Options:
 ## Compile
 
 `mkdir build && cd build && meson .. && ninja`
+
+## Example Interactive Client
+```
+fischer_project_2/build on  master [!] at ☸️  docker-desktop took 23s
+➜ ./bubble -j ../config.json -i
+[2021-03-14 20:24:36.812] [console] [info] Connection successfully established
+[2021-03-14 20:24:37.723] [console] [info] Successfully Logged in!
+[2021-03-14 20:24:37.725] [console] [info] gRPC Server listening on 0.0.0.0:50051
+bubble> help
+Bubble Interactive Client:
+dl / download <message_id>  - download email with id
+rm / delete <message_id>    - delete email with id
+ls / list <amount>          - list amount of mails
+exit                        - disconnects the session
+help                        - displays this message
+bubble> ls 5
++------------+-----------------------------------+------------------------------------------------------------------+---------------------------------+
+| Message ID | Recieved From                     | Subject                                                          | Date                            |
++------------+-----------------------------------+------------------------------------------------------------------+---------------------------------+
+| 6          | David Fischer <david@konst.fish>  | Fwd: Philip Trauner und andere teilen ihre Meinung auf LinkedIn  | Sun, 7 Mar 2021 21:13:56 +0100  |
++------------+-----------------------------------+------------------------------------------------------------------+---------------------------------+
+| 5          | David Fischer <david@konst.fish>  | Fwd: Sie werden wahrgenommen, David Fischer                      | Sun, 7 Mar 2021 21:13:53 +0100  |
++------------+-----------------------------------+------------------------------------------------------------------+---------------------------------+
+| 4          | David Fischer <david@konst.fish>  | Fwd: DJI MSDK iOS Update Delay Notice                            | Sun, 7 Mar 2021 21:13:46 +0100  |
++------------+-----------------------------------+------------------------------------------------------------------+---------------------------------+
+| 3          | David Fischer <david@konst.fish>  | Fwd: Hot in March                                                | Sun, 7 Mar 2021 21:13:13 +0100  |
++------------+-----------------------------------+------------------------------------------------------------------+---------------------------------+
+| 2          | David Fischer <david@konst.fish>  | Fwd: WIRED und andere teilen ihre Meinung auf LinkedIn           | Sat, 6 Mar 2021 22:59:52 +0100  |
++------------+-----------------------------------+------------------------------------------------------------------+---------------------------------+
+bubble> dl 6
+[2021-03-14 20:24:47.324] [console] [info] Saved message with ID: 6
+bubble> rm 6
+[2021-03-14 20:24:51.523] [console] [info] Deleted message with ID: 6
+bubble> exit
+[2021-03-14 20:24:54.536] [console] [info] Successfully Quit Session!
+```

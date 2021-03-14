@@ -73,8 +73,6 @@ class POP3client{
             }
         };
 
-        void debug();
-
         int establish_connection();
         int login(std::string user, std::string password);
         int quit();
