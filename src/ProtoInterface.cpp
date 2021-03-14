@@ -16,6 +16,8 @@ using grpc::ServerBuilder;
 using grpc::ServerContext;
 using grpc::Status;
 
+// PROTO INTERFACE
+
 int ProtoInterface::retrieve_message_meta_proto(int message_id, pop3msg::MailMeta *temp_mail_meta){
     vector<string> res_vec = client.retrieve_message_metadata(message_id);
 
@@ -88,4 +90,65 @@ int ProtoInterface::disconnect(pop3msg::Success *suc){
     suc->set_valid(check);
 
     return check;
+}
+
+// POP3CSClient
+
+pop3msg::MailList POP3CSClient::retrieve_messages(std::string cmd, int arg){
+    pop3msg::Operation op;
+
+    op.set_cmd(cmd);
+    op.set_arg(arg);
+
+    pop3msg::MailList ml;
+
+    grpc::ClientContext context;
+
+    grpc::Status status = stub_->get_mail_list(&context, op, &ml);
+
+    return ml;
+}
+
+pop3msg::Success POP3CSClient::delete_message(std::string cmd, int arg){
+    pop3msg::Operation op;
+
+    op.set_cmd(cmd);
+    op.set_arg(arg);
+
+    pop3msg::Success suc;
+
+    grpc::ClientContext context;
+
+    grpc::Status status = stub_->delete_message(&context, op, &suc);
+
+    return suc;
+}
+
+pop3msg::Success POP3CSClient::save_mail(std::string cmd, int arg){
+    pop3msg::Operation op;
+
+    op.set_cmd(cmd);
+    op.set_arg(arg);
+
+    pop3msg::Success suc;
+
+    grpc::ClientContext context;
+
+    grpc::Status status = stub_->save_mail(&context, op, &suc);
+
+    return suc;
+}
+
+pop3msg::Success POP3CSClient::disconnect(std::string cmd){
+    pop3msg::Operation op;
+
+    op.set_cmd(cmd);
+
+    pop3msg::Success suc;
+
+    grpc::ClientContext context;
+
+    grpc::Status status = stub_->disconnect(&context, op, &suc);
+
+    return suc;
 }

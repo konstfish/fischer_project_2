@@ -12,7 +12,6 @@ catnr:  03
 #include <grpcpp/grpcpp.h>
 
 #include "POP3client.h"
-//#include "pop3.pb.h"
 #include "pop3.grpc.pb.h"
 
 class ProtoInterface{
@@ -88,63 +87,11 @@ class POP3CSClient {
 
     POP3CSClient(std::shared_ptr<grpc::Channel> channel) : stub_(pop3msg::POP3CS::NewStub(channel)) {};
 
-    pop3msg::MailList retrieve_messages(std::string cmd, int arg){
-        pop3msg::Operation op;
+    pop3msg::MailList retrieve_messages(std::string cmd, int arg);
 
-        op.set_cmd(cmd);
-        op.set_arg(arg);
+    pop3msg::Success delete_message(std::string cmd, int arg);
 
-        pop3msg::MailList ml;
+    pop3msg::Success save_mail(std::string cmd, int arg);
 
-        grpc::ClientContext context;
-
-        grpc::Status status = stub_->get_mail_list(&context, op, &ml);
-
-        return ml;
-    }
-
-    pop3msg::Success delete_message(std::string cmd, int arg){
-        pop3msg::Operation op;
-
-        op.set_cmd(cmd);
-        op.set_arg(arg);
-
-        pop3msg::Success suc;
-
-        grpc::ClientContext context;
-
-        grpc::Status status = stub_->delete_message(&context, op, &suc);
-
-        return suc;
-    }
-
-    pop3msg::Success save_mail(std::string cmd, int arg){
-        pop3msg::Operation op;
-
-        op.set_cmd(cmd);
-        op.set_arg(arg);
-
-        pop3msg::Success suc;
-
-        grpc::ClientContext context;
-
-        grpc::Status status = stub_->save_mail(&context, op, &suc);
-
-        return suc;
-    }
-
-    pop3msg::Success disconnect(std::string cmd){
-        pop3msg::Operation op;
-
-        op.set_cmd(cmd);
-
-        pop3msg::Success suc;
-
-        grpc::ClientContext context;
-
-        grpc::Status status = stub_->disconnect(&context, op, &suc);
-
-        return suc;
-    }
-
+    pop3msg::Success disconnect(std::string cmd);
 };
