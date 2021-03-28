@@ -76,10 +76,8 @@ executable('bubble',
 # http server
 
 inc_dir_http = include_directories([ 'http_server/include',
-                                get_option('cli11_include_dir'),
                                 get_option('spdlog_include_dir'),
                                 get_option('json_include_dir'),
-                                get_option('tabulate_include_dir'),
                                 get_option('httplib_include_dir'),
                                 get_option('inja_include_dir')
                               ])

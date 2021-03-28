@@ -81,3 +81,8 @@ bubble> rm 6
 bubble> exit
 [2021-03-14 20:24:54.536] [console] [info] Successfully Quit Session!
 ```
+
+## Web Interface
+
+![web interface](https://github.com/konstfish/fischer_project_2/tree/master/doc/images/web_interface.png?raw=true)
+
