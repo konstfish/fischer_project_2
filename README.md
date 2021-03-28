@@ -84,5 +84,5 @@ bubble> exit
 
 ## Web Interface
 
-![web interface](https://github.com/konstfish/fischer_project_2/tree/master/doc/images/web_interface.png?raw=true)
+![web interface](/doc/images/web_interface.png?raw=true)
 
