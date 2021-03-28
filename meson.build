@@ -71,3 +71,24 @@ executable('bubble',
            include_directories : inc_dir,
            dependencies : [gnutls_dep, protobuf_dep, grpc_dep, grpcpp]
           )
+
+
+# http server
+
+inc_dir_http = include_directories([ 'http_server/include',
+                                get_option('cli11_include_dir'),
+                                get_option('spdlog_include_dir'),
+                                get_option('json_include_dir'),
+                                get_option('tabulate_include_dir'),
+                                get_option('httplib_include_dir'),
+                                get_option('inja_include_dir')
+                              ])
+
+
+src_http = ['http_server/src/main.cpp', 'http_server/src/POP3CSClient.cpp', generated_pb, generated_rpc]
+
+executable('bubble_http',
+           sources : src_http,
+           include_directories : inc_dir_http,
+           dependencies : [protobuf_dep, grpc_dep, grpcpp]
+          )

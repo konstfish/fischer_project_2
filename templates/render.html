@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+  <style>
+  body{
+    padding: 12px;
+  }
+  </style>
+
+  <script>
+    function httpGet(url)
+    {
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.open( "GET", "http://localhost:5001/del?mid="+url, false );
+        xmlHttp.send( null );
+        location.reload();
+    }
+  </script>
+</head>
+<body>
+
+<div class="jumbotron text-center">
+  <h1>bubble</h1>
+  <p>HTML Interface</p> 
+</div>
+
+<button type="button" class="btn btn-primary">
+  Mails recieved <span class="badge badge-light">{{ amount }}</span>
+</button>
+
+<h3>Mails</h3>
+
+<table class="table">
+<thead>
+    <tr>
+    <th scope="col">#</th>
+    <th scope="col">From</th>
+    <th scope="col">Subject</th>
+    <th scope="col">Date</th>
+    <th scope="col"></th>
+    </tr>
+</thead>
+<tbody>
+## for email in emails
+    <tr>
+    <th scope="row">{{ email.message_id }}</th>
+    <td>{{ email.from }}</td>
+    <td>{{ email.subject }}</td>
+    <td>{{ email.date }}</td>
+    <td><button type="button" class="btn btn-danger" onclick="httpGet({{ email.message_id }})">Delete</button></td>
+    </tr>
+## endfor
+</tbody>
+</table>
+
+
+</body>
+</html>

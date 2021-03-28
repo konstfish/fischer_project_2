@@ -5,6 +5,15 @@
 ** [0.0.6] - 2020-03-29
 *** Added
 - POP3CSImplementation.h & POP3CSClient.h Files
+- Add http_server folder
+- Add http_server meson build executable
+- Add main.cpp to http_server sources
+- Add POP3CSClient to http_server src & include
+- Include httplib (for http_server)
+- Inlcude inja (for http_server)
+- Add httplib server definition to http_server main.cpp
+- Add templates folder ( & render.html)
+- Add gRPC handling to http_server
 *** Changed
 - Split ProtoInterface.h into seperate Files
 ** [0.0.5] - 2020-03-15

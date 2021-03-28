@@ -11,8 +11,8 @@ catnr:  03
 
 #include <grpc/grpc.h>
 #include <tabulate/table.hpp>
+#include <spdlog/spdlog.h>
 
-#include "POP3client.h"
 #include "POP3CSClient.h"
 
 #include "pop3.grpc.pb.h"

@@ -66,9 +66,8 @@ int main(int argc, char* argv[]) {
         ->check(CLI::Range(1,50).description("Range of Emails limited to sensible values").active(true).name("range"));
 
     // Enable interactive Shell
-
     bool enable_interactive{false};
-    app.add_flag("-i,--interactive", enable_interactive, "Enable Interactive Shell");
+    app.add_flag("-i,--interactive", enable_interactive, "Enable Interactive Shell");    
 
     // set up spdlog
     auto console = spdlog::stdout_color_mt("console");
@@ -158,15 +157,6 @@ int main(int argc, char* argv[]) {
         server->Wait();
     });
 
-    /*
-    pop3msg::MailList res = client.retrieve_messages("ls", 10);
-    cout << res.mails_size()  << endl;
-    cout << res.mails(1).from() << endl;
-    client.retrieve_messages("dl", 5);
-    client.delete_message("rm", 5);
-    client.disconnect("exit");
-    */
-
     // INTERACTIVE SHELL
     usleep(10000);
     
@@ -181,12 +171,12 @@ int main(int argc, char* argv[]) {
 
         Interactive shell(ref(client));
         shell.run();
-    }else{
-        c.quit();
     }
 
     // join grpc server
     grpc_serv.join();
+
+    c.quit();
 
     return 0;
 }

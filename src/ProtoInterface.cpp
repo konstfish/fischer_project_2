@@ -53,7 +53,7 @@ int ProtoInterface::retrieve_messages(pop3msg::MailList *temp_mail_list, int amo
 
     int i = 1;
     while(i <= retrieve){
-        retrieve_message_meta_proto(i, temp_mail_list->add_mails());
+        retrieve_message_meta_proto((total_messages + i), temp_mail_list->add_mails());
 
         i += 1;
     }
