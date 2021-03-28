@@ -10,9 +10,10 @@ catnr:  03
 #pragma once
 
 #include <grpc/grpc.h>
+#include <tabulate/table.hpp>
 
 #include "POP3client.h"
-#include "ProtoInterface.h"
+#include "POP3CSClient.h"
 
 #include "pop3.grpc.pb.h"
 

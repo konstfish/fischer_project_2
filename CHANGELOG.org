@@ -2,6 +2,11 @@
 ** [Unreleased]
 *** Added
 - Create repository
+** [0.0.6] - 2020-03-29
+*** Added
+- POP3CSImplementation.h & POP3CSClient.h Files
+*** Changed
+- Split ProtoInterface.h into seperate Files
 ** [0.0.5] - 2020-03-15
 *** Added
 - Add protobuff test directorypop3.proto to src
@@ -25,7 +30,7 @@
 - Add Usage Section to Documentation
 - Add Project Structure Section to Documentation
 - Add Usage example to README.md
-***  Changed
+*** Changed
 - Update meson.build file
 - Add a few sections to README.md
 - Update meson.build to feature grpc

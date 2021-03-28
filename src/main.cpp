@@ -10,6 +10,7 @@ catnr:  03
 #include "POP3client.h"
 #include "Interactive.h"
 #include "ProtoInterface.h"
+#include "POP3CSImplementation.h"
 #include "pop3.pb.h"
 
 #include "CLI11.hpp"
