@@ -195,7 +195,7 @@ string POP3client::read_to_end(){
   return rec;
 }
 \end{minted}
-\caption{Funktion, die aus der Socket liest, bis der key erreicht wird}
+\caption{Funktion, die aus der Socket liest, bis der Key erreicht wird}
 \label{create_gnutls}
 \end{code}
 
@@ -307,6 +307,19 @@ auto logger = spdlog::basic_logger_mt("logger", "logs/basic-log.txt");
 \subsubsection{JSON}
 Um, wie in Sektion \ref{usage} angemerkt die Konfiguration aus einem JSON File zu lesen wird die JSON for modern C++\cite{json_ref} verwendet.
 
+\subsubsection{httplib}
+Neben dem $bubble$ executable wird ein executable namens $bubble\_http$ erstellt. Dieses öffnet einen httplib\cite{httplib-ref} HTTP Server auf Port 5001, der es dem Benutzer erlaubt Mails online mittels gRPC zu verwalten.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=1\textwidth]{web_interface.png}
+  \caption{Bubble Web Interface}
+  \label{fig:bubble_web_interface}
+\end{figure}
+
+\subsubsection{inja}
+Um die Web Interface präsentabel darstellen zu können wird die inja Template Engine\cite{inja-ref} verwendet. In Kombination mit httlib und gRPC kann die Web Interface dynamisch mit Daten befüllt werden.
+
 \subsubsection{GnuTLS}
 Um GnuTLS zu implementieren wurde die C++ API verwendet\cite{gnutls_cpp}. Dies ist in Sektion \ref{gnutls_implement_proj} näher beschrieben.
 
@@ -391,6 +404,14 @@ help                        - displays this message
   .3 dokumentation.tex.
   .3 references.bib.
   .3 dokumentation.pdf.
+  .2 http\_server.
+  .3 include.
+  .4 POP3CSClient.h.
+  .3 src.
+  .4 main.cpp.
+  .4 POP3CSClient.cpp.
+  .2 templates.
+  .3 render.html.
   .2 build.
 }\hfill
 

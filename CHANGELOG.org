@@ -15,6 +15,9 @@
 - Add templates folder ( & render.html)
 - Add gRPC handling to http_server
 - Add retrieve_message_meta_proto_dry function to ProtoInterface Class
+- Add http_server & templates folder to Documentation
+- Add httplib Section to Documentation
+- Add inja Section to Documentation
 *** Changed
 - Split ProtoInterface.h into seperate Files
 - Update render.html File
