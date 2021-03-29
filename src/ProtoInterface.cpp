@@ -28,6 +28,16 @@ int ProtoInterface::retrieve_message_meta_proto(int message_id, pop3msg::MailMet
     return 0;
 }
 
+int ProtoInterface::retrieve_message_meta_proto_dry(int message_id){
+    vector<string> res_vec = client.retrieve_message_metadata(message_id);
+
+    if(res_vec[0] == "MARKED FOR DELETION"){
+        return 1;
+    }
+
+    return 0;
+}
+
 int ProtoInterface::retrieve_messages(pop3msg::MailList *temp_mail_list, int amount){
     int total_messages = client.get_total_messages();
 
@@ -35,14 +45,15 @@ int ProtoInterface::retrieve_messages(pop3msg::MailList *temp_mail_list, int amo
         amount = total_messages;
     }
 
-    int retrieve = 0;
-
+    int retrieve{0};
     int check{0};
 
+
+    // dry run
     int cur_message = total_messages;
 
     while(cur_message > (total_messages - amount)){
-        check = retrieve_message_meta_proto(cur_message, temp_mail_list->add_mails());
+        check = retrieve_message_meta_proto_dry(cur_message);
 
         if(check){
             retrieve += 1;
@@ -51,11 +62,23 @@ int ProtoInterface::retrieve_messages(pop3msg::MailList *temp_mail_list, int amo
         cur_message -= 1;
     }
 
+    // run
+
+    // retrieve (overcompensate for deleted messages)
     int i = 1;
     while(i <= retrieve){
         retrieve_message_meta_proto((total_messages + i), temp_mail_list->add_mails());
 
         i += 1;
+    }
+
+    // run
+    cur_message = total_messages;
+
+    while(cur_message > (total_messages - amount)){
+        check = retrieve_message_meta_proto(cur_message, temp_mail_list->add_mails());
+
+        cur_message -= 1;
     }
 
     return 0;

@@ -22,6 +22,8 @@ class ProtoInterface{
         ProtoInterface(POP3client &c):client( c ){};
 
         int retrieve_message_meta_proto(int message_id, pop3msg::MailMeta *temp_mail_meta);
+        int retrieve_message_meta_proto_dry(int message_id);
+        
         int retrieve_messages(pop3msg::MailList *ml, int amount);
 
         int delete_message(pop3msg::Success *suc, int message_id);

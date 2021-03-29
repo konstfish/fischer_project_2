@@ -97,6 +97,30 @@ int main() {
         res.set_content("done", "text/plain");
     });
 
+    svr.Get("/dl", [&](const httplib::Request& req, httplib::Response& res) {
+        spdlog::get("console")->info("Serving /del");
+
+        auto id = req.get_param_value("mid");
+        
+        if(id == ""){
+            res.set_content("Invalid Request", "text/plain");   
+        }
+        
+        int arg_int = stoi(id);
+
+        pop3msg::Success suc = client.save_mail("dl", arg_int);
+
+        res.set_content("done", "text/plain");
+    });
+
+    svr.Get("/exit", [&](const httplib::Request& req, httplib::Response& res) {
+        spdlog::get("console")->info("Serving /exit");
+        
+        pop3msg::Success suc = client.disconnect("exit");
+
+        res.set_content("done", "text/plain");
+    });
+
     string http_srv_address = "127.0.0.1";
     int port = 5001;
 

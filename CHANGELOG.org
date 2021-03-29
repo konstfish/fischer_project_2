@@ -14,8 +14,11 @@
 - Add httplib server definition to http_server main.cpp
 - Add templates folder ( & render.html)
 - Add gRPC handling to http_server
+- Add retrieve_message_meta_proto_dry function to ProtoInterface Class
 *** Changed
 - Split ProtoInterface.h into seperate Files
+- Update render.html File
+- Add dry run to ProtoInterface::retrieve_messages function
 ** [0.0.5] - 2020-03-15
 *** Added
 - Add protobuff test directorypop3.proto to src

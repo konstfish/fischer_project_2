@@ -15,10 +15,26 @@
   </style>
 
   <script>
-    function httpGet(url)
+    function del_mail(url)
     {
         var xmlHttp = new XMLHttpRequest();
         xmlHttp.open( "GET", "http://localhost:5001/del?mid="+url, false );
+        xmlHttp.send( null );
+        location.reload();
+    }
+
+    function dl_mail(url)
+    {
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.open( "GET", "http://localhost:5001/dl?mid="+url, false );
+        xmlHttp.send( null );
+        alert("Downloaded Email with ID: " + url);
+    }
+
+    function disconnect()
+    {
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.open( "GET", "http://localhost:5001/exit", false );
         xmlHttp.send( null );
         location.reload();
     }
@@ -32,7 +48,12 @@
 </div>
 
 <button type="button" class="btn btn-primary">
-  Mails recieved <span class="badge badge-light">{{ amount }}</span>
+  Mails recieved: <span class="badge badge-light">{{ amount }}</span>
+</button>
+
+
+<button style="float:right;" type="button" class="btn btn-danger" onclick="disconnect()">
+  Disconnect
 </button>
 
 <h3>Mails</h3>
@@ -54,7 +75,8 @@
     <td>{{ email.from }}</td>
     <td>{{ email.subject }}</td>
     <td>{{ email.date }}</td>
-    <td><button type="button" class="btn btn-danger" onclick="httpGet({{ email.message_id }})">Delete</button></td>
+    <td><button type="button" class="btn btn-primary" onclick="dl_mail({{ email.message_id }})">Download</button></td>
+    <td><button type="button" class="btn btn-danger" onclick="del_mail({{ email.message_id }})">Delete</button></td>
     </tr>
 ## endfor
 </tbody>
