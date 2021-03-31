@@ -8,7 +8,6 @@ catnr:  03
 */
 
 #include <grpc/grpc.h>
-#include <tabulate/table.hpp>
 #include <httplib.h>
 #include <json.hpp>
 #include <inja.hpp>

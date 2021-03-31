@@ -16,7 +16,6 @@ catnr:  03
 #include <algorithm>
 
 #include <spdlog/spdlog.h>
-#include <tabulate/table.hpp>
 
 class POP3client_utils{
     public:

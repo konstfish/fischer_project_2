@@ -5,6 +5,7 @@ backup
 ._*
 src_ext/
 dokumentation.bbl
+config_htl.json
 
 # Prerequisites
 *.d
