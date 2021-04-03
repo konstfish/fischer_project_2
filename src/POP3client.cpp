@@ -160,7 +160,6 @@ void POP3client::read(){
     }
 
     string rec = buff;
-    //cout << rec;
 }
 
 string POP3client::read_to_str(){
@@ -284,7 +283,7 @@ vector<vector<string>> POP3client::retrieve_messages(int amount){
 
 vector<string> POP3client::retrieve_message_metadata(int message_id){
     write("TOP " + to_string(message_id));
-    string res = read_to_str();
+    string res = read_to_end();
 
     vector<string> res_vec;
 

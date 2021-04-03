@@ -24,6 +24,7 @@
 - Update render.html File
 - Add dry run to ProtoInterface::retrieve_messages function
 - Change json include
+- Update Message Lister to function with longer metadata
 ** [0.0.5] - 2020-03-15
 *** Added
 - Add protobuff test directorypop3.proto to src

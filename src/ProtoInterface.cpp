@@ -48,7 +48,6 @@ int ProtoInterface::retrieve_messages(pop3msg::MailList *temp_mail_list, int amo
     int retrieve{0};
     int check{0};
 
-
     // dry run
     int cur_message = total_messages;
 

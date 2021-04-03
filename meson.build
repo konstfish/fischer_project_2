@@ -2,7 +2,7 @@
 project('bubble', 'cpp',
         license : ['Boost'],
         version : '0.0.5',
-        default_options : ['cpp_std=c++17', 'warning_level=3', 'werror=true'])
+        default_options : ['cpp_std=c++17', 'warning_level=3', 'werror=false'])
 
 gnutls_dep = dependency('gnutls')
 

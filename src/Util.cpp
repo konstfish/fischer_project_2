@@ -56,27 +56,35 @@ vector<string> POP3client_utils::split_message(string res){
 
     string split = "\n";
 
+    string from{""};
+    string subject{""};
+    string date{""};
+
     while ((pos = res.find(split)) != std::string::npos){
         token = res.substr(0, pos);
         
         if (token.find("From: ") != std::string::npos) {
             // From: - 
             token = token.substr(6, token.length());
-            vec.push_back(token);
+            from = token;
         }
 
         if (token.find("Subject: ") != std::string::npos) {
             token = token.substr(9, token.length());
-            vec.push_back(token);
+            subject = token;
         }
 
         if (token.find("Date: ") != std::string::npos) {
             token = token.substr(6, token.length());
-            vec.push_back(token);
+            date = token;
         }
 
         res.erase(0, pos + split.length());
     }
+
+    vec.push_back(from);
+    vec.push_back(subject);
+    vec.push_back(date);
 
     replace(vec[0].begin(), vec[0].end(), '\n', '\0');
     replace(vec[1].begin(), vec[1].end(), '\n', '\0');
