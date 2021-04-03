@@ -9,8 +9,8 @@ catnr:  03
 
 #pragma once
 
-#include <table.hpp>
-//#include <tabulate.hpp>
+//#include <table.hpp>
+#include <tabulate.hpp>
 
 #include <spdlog/spdlog.h>
 

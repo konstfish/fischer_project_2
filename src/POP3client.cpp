@@ -324,7 +324,6 @@ int POP3client::login(string user, string password){
 }
 
 int POP3client::quit(){
-
     write("QUIT ");
 
     string res = read_to_str();
