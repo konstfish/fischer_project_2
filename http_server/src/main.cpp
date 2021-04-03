@@ -7,14 +7,26 @@ class:  5C
 catnr:  03
 */
 
-#include <grpc/grpc.h>
 #include <httplib.h>
-#include <json.hpp>
+
+#include <nlohmann/json.hpp>
+
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wnon-virtual-dtor"
 #include <inja.hpp>
+#pragma GCC diagnostic pop
+
 #include <spdlog/spdlog.h>
 #include <spdlog/sinks/stdout_color_sinks.h>
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-parameter"
+#pragma GCC diagnostic ignored "-Wnon-virtual-dtor"
+#include <grpcpp/grpcpp.h>
+
 #include "pop3.grpc.pb.h"
+#pragma GCC diagnostic pop
+
 #include "POP3CSClient.h"
 
 #include <iostream>
@@ -50,11 +62,11 @@ int main() {
     // / route, calls the Coordinator::message_req function
     svr.Get("/", [&](const httplib::Request& req, httplib::Response& res) {
         spdlog::get("console")->info("Serving /");
+        (void)req;
 
         Environment env;
 
         pop3msg::MailList ml = client.retrieve_messages("ls", 50);
-        // spdlog::info("HTTP: /req from {}", conv);
 
         json data;
 
@@ -113,6 +125,7 @@ int main() {
     });
 
     svr.Get("/exit", [&](const httplib::Request& req, httplib::Response& res) {
+        (void)req;
         spdlog::get("console")->info("Serving /exit");
         
         pop3msg::Success suc = client.disconnect("exit");

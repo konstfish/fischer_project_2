@@ -9,15 +9,20 @@ catnr:  03
 
 #pragma once
 
-#include <grpc/grpc.h>
-// #include <tabulate/table.hpp>
-#include <tabulate.hpp>
+#include <table.hpp>
+//#include <tabulate.hpp>
 
 #include <spdlog/spdlog.h>
 
 #include "POP3CSClient.h"
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-parameter"
+#pragma GCC diagnostic ignored "-Wnon-virtual-dtor"
+#include <grpcpp/grpcpp.h>
+
 #include "pop3.grpc.pb.h"
+#pragma GCC diagnostic pop
 
 class Interactive{
     private:

@@ -9,10 +9,15 @@ catnr:  03
 
 #pragma once
 
+#include "POP3client.h"
+
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-parameter"
+#pragma GCC diagnostic ignored "-Wnon-virtual-dtor"
 #include <grpcpp/grpcpp.h>
 
-#include "POP3client.h"
 #include "pop3.grpc.pb.h"
+#pragma GCC diagnostic pop
 
 class ProtoInterface{
     private:

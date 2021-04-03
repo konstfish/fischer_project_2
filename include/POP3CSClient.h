@@ -9,9 +9,13 @@ catnr:  03
 
 #pragma once
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-parameter"
+#pragma GCC diagnostic ignored "-Wnon-virtual-dtor"
 #include <grpcpp/grpcpp.h>
 
 #include "pop3.grpc.pb.h"
+#pragma GCC diagnostic pop
 
 class POP3CSClient {
     private:

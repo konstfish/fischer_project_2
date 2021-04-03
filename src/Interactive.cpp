@@ -68,6 +68,7 @@ int Interactive::run(){
                 spdlog::get("console")->warn("Argument not valid");
             }else{
                 pop3msg::MailList ml = client.retrieve_messages(cmd, arg_int);
+                cout << "test" << endl;
                 print_messages(ml);
             }
         }

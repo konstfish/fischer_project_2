@@ -18,10 +18,12 @@
 - Add http_server & templates folder to Documentation
 - Add httplib Section to Documentation
 - Add inja Section to Documentation
+- Add #pragma GCC diagnostic includes to gRPC
 *** Changed
 - Split ProtoInterface.h into seperate Files
 - Update render.html File
 - Add dry run to ProtoInterface::retrieve_messages function
+- Change json include
 ** [0.0.5] - 2020-03-15
 *** Added
 - Add protobuff test directorypop3.proto to src

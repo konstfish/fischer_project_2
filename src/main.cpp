@@ -11,20 +11,23 @@ catnr:  03
 #include "Interactive.h"
 #include "ProtoInterface.h"
 #include "POP3CSImplementation.h"
-#include "pop3.pb.h"
 
 #include "CLI11.hpp"
 
-#include <json.hpp>
+#include <nlohmann/json.hpp>
 
 #include <spdlog/spdlog.h>
 #include <spdlog/sinks/stdout_color_sinks.h>
 #include "spdlog/sinks/basic_file_sink.h"
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-parameter"
+#pragma GCC diagnostic ignored "-Wnon-virtual-dtor"
 #include <grpc/grpc.h>
 #include <grpcpp/server.h>
 #include <grpcpp/server_builder.h>
 #include <grpcpp/server_context.h>
+#pragma GCC diagnostic pop
 
 #include <iostream>
 

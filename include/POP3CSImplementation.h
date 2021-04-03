@@ -9,9 +9,13 @@ catnr:  03
 
 #pragma once
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-parameter"
+#pragma GCC diagnostic ignored "-Wnon-virtual-dtor"
 #include <grpcpp/grpcpp.h>
 
 #include "pop3.grpc.pb.h"
+#pragma GCC diagnostic pop
 
 #include "ProtoInterface.h"
 
@@ -23,7 +27,7 @@ class POP3CSImplementation final : public pop3msg::POP3CS::Service {
         explicit POP3CSImplementation(ProtoInterface &pi):protoi(pi) {}
 
         grpc::Status get_mail_list(
-            grpc::ServerContext* context, 
+            [[maybe_unused]] grpc::ServerContext* context, 
             const pop3msg::Operation* operation, 
             pop3msg::MailList* reply
         ) override {
@@ -33,7 +37,7 @@ class POP3CSImplementation final : public pop3msg::POP3CS::Service {
         };
 
         grpc::Status save_mail(
-            grpc::ServerContext* context, 
+            [[maybe_unused]] grpc::ServerContext* context, 
             const pop3msg::Operation* operation, 
             pop3msg::Success* reply
         ) override {
@@ -43,7 +47,7 @@ class POP3CSImplementation final : public pop3msg::POP3CS::Service {
         };
 
         grpc::Status delete_message(
-            grpc::ServerContext* context, 
+            [[maybe_unused]] grpc::ServerContext* context, 
             const pop3msg::Operation* operation, 
             pop3msg::Success* reply
         ) override {
@@ -53,8 +57,8 @@ class POP3CSImplementation final : public pop3msg::POP3CS::Service {
         };
 
         grpc::Status disconnect(
-            grpc::ServerContext* context, 
-            const pop3msg::Operation* operation, 
+            [[maybe_unused]] grpc::ServerContext* context, 
+            [[maybe_unused]] const pop3msg::Operation* operation, 
             pop3msg::Success* reply
         ) override {
             protoi.disconnect(reply);
