@@ -96,7 +96,6 @@ int POP3client::socket_setup(){
 
 // http://www.hep.by/gnu/gnutls/Simple-client-example-with-X_002e509-certificate-support.html#Simple-client-example-with-X_002e509-certificate-support
 int POP3client::gnutls_setup(){
-    int ret;
     const char *err;
 
     // X.509 authentication is used
@@ -112,7 +111,7 @@ int POP3client::gnutls_setup(){
     
     // gnutls priorities (priority strings specify the TLS sessions handshake algorithms and options in a compact, easy-to-use format)
     // https://gnutls.org/manual/html_node/Priority-Strings.html
-    ret = gnutls_priority_set_direct (gnutls_sd, "NORMAL", &err);
+    gnutls_priority_set_direct (gnutls_sd, "NORMAL", &err);
 
     // apply credentials to current session
     gnutls_credentials_set (gnutls_sd, GNUTLS_CRD_CERTIFICATE, xcred);
