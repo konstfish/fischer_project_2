@@ -29,6 +29,8 @@
 - Change json include
 - Update Message Lister to function with longer metadata
 - Update main.cpp & Interactive.h to enable compilation on Linux Hosts
+*** Removed
+- Deprecate access to POP3 Functions using CL Arguments
 ** [0.0.5] - 2020-03-15
 *** Added
 - Add protobuff test directorypop3.proto to src

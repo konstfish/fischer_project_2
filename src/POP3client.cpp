@@ -47,8 +47,8 @@ int POP3client::establish_connection(){
     vector<string> res_vec = utility.split(res, " ");
 
     if(res_vec[0] == "+OK"){
-        spdlog::get("console")->info("Connection successfully established");
-        spdlog::get("logger")->info("Connection successfully established");
+        spdlog::get("console")->info("Connection successfully established, TLS: {}", tls);
+        spdlog::get("logger")->info("Connection successfully established, TLS: {}", tls);
     }else{
         spdlog::get("console")->error("Unable to connect");
         spdlog::get("logger")->error("Unable to connect");

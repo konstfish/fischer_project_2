@@ -56,7 +56,8 @@ int main(int argc, char* argv[]) {
     string jsonfile{""};
     app.add_option("-j,--json", jsonfile, "Relative path to JSON file containing the Config");
 
-    // Commands to execute
+    // Deprecated
+    /*
     int download{-1};
     app.add_option("-d,--download", download, "Download Email with specified ID");
 
@@ -66,6 +67,7 @@ int main(int argc, char* argv[]) {
     int list{-1};
     app.add_option("-l,--list", list, "List ")
         ->check(CLI::Range(1,50).description("Range of Emails limited to sensible values").active(true).name("range"));
+    */
 
     // Enable interactive Shell
     bool enable_interactive{false};
@@ -130,6 +132,8 @@ int main(int argc, char* argv[]) {
     }
 
     // check for commands
+    // deprecated
+    /*
     if(download != -1){
         c.save_mail(download);
     }
@@ -141,6 +145,7 @@ int main(int argc, char* argv[]) {
     if(del != -1){
         c.delete_message(del);
     }
+    */
 
     // ProtoServer
 
