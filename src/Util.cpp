@@ -11,6 +11,7 @@ catnr:  03
 
 using namespace std;
 
+// helper function to write a string email to an .eml file in the build folder
 int POP3client_utils::email_to_file(string write, string subject){
     ofstream fstr;
 
@@ -29,6 +30,7 @@ int POP3client_utils::email_to_file(string write, string subject){
     return 0;
 }
 
+// helper function to split strings using a certain identifier. returns a vector of strings
 vector<string> POP3client_utils::split(string res, string split){
     vector<string> vec;
 
@@ -48,6 +50,7 @@ vector<string> POP3client_utils::split(string res, string split){
     return vec;
 }
 
+// helper function to split a pop3 email
 vector<string> POP3client_utils::split_message(string res){
     vector<string> vec;
 
@@ -94,11 +97,13 @@ vector<string> POP3client_utils::split_message(string res){
 }
 
 // https://stackoverflow.com/questions/874134/find-out-if-string-ends-with-another-string-in-c
+// helper function to check if a message ends with a certain string
 bool POP3client_utils::ends_with(string s, string suffix)
 {
     return s.size() >= suffix.size() && s.rfind(suffix) == (s.size()-suffix.size());
 }
 
+// old function, not used, but still usefull
 /*
 void POP3client_utils::print_messages(vector<vector<string>> messages){
     int size = messages.size();

@@ -17,6 +17,7 @@ catnr:  03
 #include "pop3.grpc.pb.h"
 #pragma GCC diagnostic pop
 
+// POP3CSClient Class, communicates with with the gRPC Server
 class POP3CSClient {
     private:
         std::unique_ptr<pop3msg::POP3CS::Stub> stub_;

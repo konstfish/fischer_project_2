@@ -1,7 +1,7 @@
 /*
 author: David Fischer
 matnr:  i16079
-file:   Protointerface.cpp
+file:   POP3CSClient.cpp
 desc:   NVS Projekt 2 - Simpler POP3 Client mit TLS Support
 class:  5C
 catnr:  03
@@ -11,6 +11,7 @@ catnr:  03
 
 using namespace std;
 
+// grpc client function to retrieve a MailList from the Server
 pop3msg::MailList POP3CSClient::retrieve_messages(std::string cmd, int arg){
     pop3msg::Operation op;
 
@@ -26,6 +27,7 @@ pop3msg::MailList POP3CSClient::retrieve_messages(std::string cmd, int arg){
     return ml;
 }
 
+// grpc client function, which instructs the Server to delete an email
 pop3msg::Success POP3CSClient::delete_message(std::string cmd, int arg){
     pop3msg::Operation op;
 
@@ -41,6 +43,7 @@ pop3msg::Success POP3CSClient::delete_message(std::string cmd, int arg){
     return suc;
 }
 
+// grpc client function, which instructs the Server to save a mail locally
 pop3msg::Success POP3CSClient::save_mail(std::string cmd, int arg){
     pop3msg::Operation op;
 
@@ -56,6 +59,7 @@ pop3msg::Success POP3CSClient::save_mail(std::string cmd, int arg){
     return suc;
 }
 
+// grpc client function, which instructs the Server to disconnect from the POP3 Server
 pop3msg::Success POP3CSClient::disconnect(std::string cmd){
     pop3msg::Operation op;
 

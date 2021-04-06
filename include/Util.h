@@ -9,14 +9,15 @@ catnr:  03
 
 #pragma once
 
+#include <spdlog/spdlog.h>
+
 #include <iostream>
 #include <fstream>
 #include <string>
 #include <vector> 
 #include <algorithm>
 
-#include <spdlog/spdlog.h>
-
+// Utility Helper Functions to support the main POP3Client Class
 class POP3client_utils{
     public:
         POP3client_utils(){};

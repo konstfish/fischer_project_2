@@ -11,6 +11,7 @@ catnr:  03
 
 using namespace std;
 
+// runs the interactive shell
 int Interactive::run(){
     char input[100];
     string string_inp;
@@ -19,18 +20,15 @@ int Interactive::run(){
 
     while (true){
         memset(input, 0, sizeof(input));
+
+        // print input prompt
         cout << "bubble> ";
         cin.getline(input,sizeof(input));
 
         string_inp = input;
         parse_input(ref(cmd), ref(arg), string_inp);
 
-        //cout << cmd << endl;
-        //cout << arg << endl;
-
         int arg_int{0};
-
-        //spdlog::get("console")->warn("Argument not valid");
 
         arg_int = parse_integer(arg);
 
@@ -91,6 +89,7 @@ int Interactive::run(){
     return 0;
 }
 
+// helper function to parse integers
 int Interactive::parse_integer(string arg){
     try{
         int arg_int = stoi(arg);
@@ -100,6 +99,7 @@ int Interactive::parse_integer(string arg){
     }
 }
 
+// helper function to parse the speciefied input.
 void Interactive::parse_input(string &c, string &a, string inp){
     c = "";
     a = "";
@@ -122,6 +122,7 @@ void Interactive::parse_input(string &c, string &a, string inp){
     }
 }
 
+// helper function to print the MailList Proto Construct using tabulate.
 void Interactive::print_messages(pop3msg::MailList ml){
     int size = ml.mails_size();
     int i = 0;

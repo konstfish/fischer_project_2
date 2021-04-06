@@ -19,6 +19,7 @@ catnr:  03
 #include "pop3.grpc.pb.h"
 #pragma GCC diagnostic pop
 
+// ProtoInterface Class, converts POP3Client vectors to Proto Constructs
 class ProtoInterface{
     private:
         POP3client &client;

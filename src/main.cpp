@@ -13,7 +13,6 @@ catnr:  03
 #include "POP3CSImplementation.h"
 
 #include "CLI11.hpp"
-
 #include <json.hpp>
 
 #include <spdlog/spdlog.h>
@@ -179,6 +178,7 @@ int main(int argc, char* argv[]) {
     // join grpc server
     grpc_serv.join();
 
+    // end pop3client session
     c.quit();
 
     return 0;

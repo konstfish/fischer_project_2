@@ -9,8 +9,12 @@ catnr:  03
 
 #pragma once
 
-#include <iostream>
+#include "Util.h"
 
+#include <gnutls/gnutls.h>
+#include <spdlog/spdlog.h>
+
+#include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -22,11 +26,7 @@ catnr:  03
 #include <netdb.h>
 #include <vector> 
 
-#include <gnutls/gnutls.h>
-#include <spdlog/spdlog.h>
-
-#include "Util.h"
-
+// POP3client class, interacts with the POP3 Server
 class POP3client{
     private:
         std::string end_signal = ".\r";

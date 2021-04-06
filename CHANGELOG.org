@@ -19,6 +19,9 @@
 - Add httplib Section to Documentation
 - Add inja Section to Documentation
 - Add #pragma GCC diagnostic includes to gRPC
+- Add comments to every function
+- Add comments to classes
+- Delete unused code & Debug
 *** Changed
 - Split ProtoInterface.h into seperate Files
 - Update render.html File

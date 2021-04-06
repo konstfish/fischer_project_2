@@ -11,6 +11,8 @@ catnr:  03
 
 using namespace std;
 
+// helper function to establish connection to the POP3 Server.
+// resolves hostname, sets up a socket (established gnutls handshake)
 int POP3client::establish_connection(){
     int check{0};
 
@@ -58,6 +60,7 @@ int POP3client::establish_connection(){
 
 // https://stackoverflow.com/questions/52727565/client-in-c-use-gethostbyname-or-getaddrinfo
 // https://stackoverflow.com/questions/38002016/problems-with-gethostbyname-c
+// helper function to resolve hostnames to an address range & ip
 int POP3client::resolve() {
     hostent *rh = gethostbyname(hostname.c_str());
     if(rh == NULL){
@@ -72,6 +75,7 @@ int POP3client::resolve() {
 }
 
 // http://www.hep.by/gnu/gnutls/Helper-functions-for-TCP-connections.html#Helper-functions-for-TCP-connections
+// helper function to set up a socket
 int POP3client::socket_setup(){
     int err;
 
@@ -95,6 +99,7 @@ int POP3client::socket_setup(){
 }
 
 // http://www.hep.by/gnu/gnutls/Simple-client-example-with-X_002e509-certificate-support.html#Simple-client-example-with-X_002e509-certificate-support
+// helper function to establish gnutls handshake using the established socket
 int POP3client::gnutls_setup(){
     const char *err;
 
@@ -134,6 +139,7 @@ int POP3client::gnutls_setup(){
     return 0;
 }
 
+// helper function to destroy the gnutls socket
 void POP3client::gnutls_destruction(){
     gnutls_bye (gnutls_sd, GNUTLS_SHUT_RDWR);
 
@@ -142,12 +148,14 @@ void POP3client::gnutls_destruction(){
     gnutls_global_deinit ();
 }
 
+// helper function to destroy the socket
 void POP3client::socket_destruction(){
   shutdown (sd, SHUT_RDWR);
   close (sd);
 }
 
 // https://stackoverflow.com/questions/43264266/c-socket-send-and-connect
+// read from the socket (used for simple +OK answers)
 void POP3client::read(){
     char buff[8000]{};
     memset(buff, 0, sizeof(buff));
@@ -161,6 +169,7 @@ void POP3client::read(){
     string rec = buff;
 }
 
+// read from socket & returns a string (used for simple +OK answers)
 string POP3client::read_to_str(){
     char buff[8000]{};
     memset(buff, 0, sizeof(buff));
@@ -175,6 +184,8 @@ string POP3client::read_to_str(){
     return rec;
 }
 
+// When longer messages are returned, POP3 Servers end them with an end signal. 
+// Specified in this function as ".\r\n". The function reads until this signal is detected.
 string POP3client::read_to_end(){
     char buff[8000]{};
     memset(buff, 0, sizeof(buff));
@@ -200,6 +211,7 @@ string POP3client::read_to_end(){
 }
 
 // https://stackoverflow.com/questions/43264266/c-socket-send-and-connect
+// helper function to write into the socket
 int POP3client::write(std::string msg){
     msg = msg + "\n";
     const char *cmsg = msg.c_str();
@@ -216,6 +228,7 @@ int POP3client::write(std::string msg){
     return result;
 }
 
+// Reads total messages from the POP3 Server using the "STAT" function
 int POP3client::get_total_messages(){
     write("STAT");
     string res = read_to_str();
@@ -228,6 +241,7 @@ int POP3client::get_total_messages(){
     return amount;
 }
 
+// Deletes a message from the POP3 Server using the "DELE" function
 int POP3client::delete_message(int message_id){
     write("DELE " + to_string(message_id));
     string res = read_to_str();
@@ -243,6 +257,8 @@ int POP3client::delete_message(int message_id){
     return 0;
 }
 
+// Creates a vector of a vector of strings, containing a specified amount of mails
+// (subject line, author, date recieved, id)
 vector<vector<string>> POP3client::retrieve_messages(int amount){
     int total_messages = get_total_messages();
     vector<vector<string>> messages;
@@ -280,6 +296,7 @@ vector<vector<string>> POP3client::retrieve_messages(int amount){
     return messages;
 }
 
+// retrieves the subject, author and date from the specified email
 vector<string> POP3client::retrieve_message_metadata(int message_id){
     write("TOP " + to_string(message_id));
     string res = read_to_end();
@@ -301,6 +318,7 @@ vector<string> POP3client::retrieve_message_metadata(int message_id){
     return res_vec;
 }
 
+// helper function to attempt a login on the pop3 server
 int POP3client::login(string user, string password){
 
     write("USER " + user);
@@ -322,6 +340,7 @@ int POP3client::login(string user, string password){
     return 0;
 }
 
+// disconnects from the pop3 server
 int POP3client::quit(){
     write("QUIT ");
 
@@ -340,6 +359,7 @@ int POP3client::quit(){
     exit(0);
 }
 
+// saves email as .eml file (in the build folder)
 int POP3client::save_mail(int message_id){
     write("RETR " + to_string(message_id));
     string email = read_to_end();

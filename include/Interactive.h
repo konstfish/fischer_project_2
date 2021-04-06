@@ -9,15 +9,16 @@ catnr:  03
 
 #pragma once
 
-//#include <table.hpp>
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wnon-virtual-dtor"
-#include <tabulate.hpp>
-#pragma GCC diagnostic pop
+
+#include "POP3CSClient.h"
 
 #include <spdlog/spdlog.h>
 
-#include "POP3CSClient.h"
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wnon-virtual-dtor"
+#include <tabulate.hpp>
+//#include <table.hpp>
+#pragma GCC diagnostic pop
 
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunused-parameter"
@@ -27,6 +28,8 @@ catnr:  03
 #include "pop3.grpc.pb.h"
 #pragma GCC diagnostic pop
 
+// Class Interactive, Enables an Interactive Shell to dynamically comunicate with the 
+// POP3 Server in a bash-style manner
 class Interactive{
     private:
         POP3CSClient &client;
