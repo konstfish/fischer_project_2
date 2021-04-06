@@ -265,7 +265,7 @@ service POP3CS {
   \caption{gRPC Routen}
 \end{code}
 
-Die "Interactive" Klasse benutzt den gRPC Client, um Daten des POP3 Servers über die "ProtoInterface" Klasse anzufragen.
+Die "POP3CSClient" Klasse benutzt den gRPC Client, um Daten des POP3 Servers über die "POP3CSImplementation" Klasse anzufragen.
 
 \subsection{Externe Bibliotheken}
 \label{extBib}
@@ -279,15 +279,15 @@ Um die E-Mails in einer optisch ansprechenden Art darzustellen, wird eine Tabell
 \begin{code}
   \begin{minted}{text}
 bubble> ls 3
-+------------+----------------------+--------------------------------+
-| Message ID | Recieved From        | Subject                        | 
-+------------+----------------------+--------------------------------+
-| 6          | David Fischer <...>  | Fwd: Linkedin ...              | 
-+------------+----------------------+--------------------------------+
-| 5          | David Fischer <...>  | Fwd: Sie werden wahrgenommen!  |
-+------------+----------------------+--------------------------------+
-| 4          | David Fischer <...>  | Fwd: DJI MSDK iOS Delay Notice |
-+------------+----------------------+--------------------------------+
++------------+----------------------+---------------------------+
+| Message ID | Recieved From        | Subject                   | 
++------------+----------------------+---------------------------+
+| 6          | David Fischer <...>  | Linkedin ...              | 
++------------+----------------------+---------------------------+
+| 5          | David Fischer <...>  | Sie werden wahrgenommen!  |
++------------+----------------------+---------------------------+
+| 4          | David Fischer <...>  | DJI MSDK iOS Delay Notice |
++------------+----------------------+---------------------------+
   \end{minted}
   \caption{Ausgabe des list Befehls}
 \end{code}
