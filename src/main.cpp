@@ -14,7 +14,7 @@ catnr:  03
 
 #include "CLI11.hpp"
 
-#include <nlohmann/json.hpp>
+#include <json.hpp>
 
 #include <spdlog/spdlog.h>
 #include <spdlog/sinks/stdout_color_sinks.h>
@@ -96,7 +96,7 @@ int main(int argc, char* argv[]) {
             password = j["password"];
             use_tls = j["tls"];
             port = j["port"];
-        }catch(exception e){
+        }catch(exception& e){
             spdlog::get("console")->error("Unable to read specified JSON File");
             return 1;
         }

@@ -10,7 +10,10 @@ catnr:  03
 #pragma once
 
 //#include <table.hpp>
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wnon-virtual-dtor"
 #include <tabulate.hpp>
+#pragma GCC diagnostic pop
 
 #include <spdlog/spdlog.h>
 
