@@ -42,6 +42,26 @@ Laut Angabe war das Ziel dieser Aufgabe einen POP3 Client inklusive Unterstützu
   \label{fig:kdg}
 \end{figure}
 
+\subsection{Klassen}
+
+\subsubsection{POP3client}
+Die POP3client Klasse umfasst die Funktionen, die es dem Program erlauben eine Verbindung zu einem POP3 Server aufzubauen und dessen Daten auszuwerten.
+
+\subsubsection{POP3client\_utils}
+Die POP3client\_utils Klasse umfasst Helfer-Funktionen, die die POP3Client Klasse unterstützen.
+
+\subsubsection{ProtoInterface}
+Die ProtoInterface Klasse verarbeitet Daten der POP3Client Klasse, und konvertiert diese zu Protobuf Strukturen.
+
+\subsubsection{POP3CSClient}
+Die POP3CSClient Klasse ist eine simple gRPC Client Klasse, die Daten des gRPC Servers empfängt und verarbeitet.
+
+\subsubsection{POP3CSImplementation}
+Die POP3CSImplementation Klasse umfasst einen simplen gRPC Server.
+
+\subsubsection{Interactive}
+Die Interactive Klasse erlaubt die dynamische Eingabe von Befehlen während der Runtime des Programmes. 
+
 \section{Implementierung}
 Für Variablen sowie Funktionen wurde "Snake case" benutzt. Sämtliche vorgegebene Codierungskonventionen wurden nach Möglichkeit eingehalten. Um sämtliche Teile des Programmes zu vereinfachen, wurden mehrere externe Bibliotheken verwendet, diese sind in Sektion \ref{extBib} kurz beschrieben. 
 
@@ -89,7 +109,7 @@ Beendet die Session und speichtert getroffene Änderungen.
 
 \subsubsection{Auflösen einer Domain}
 
-Die verwendung der asio Bibliothek war in diesem Projekt leider nicht möglich, daher werden die Domains mit Funktionen aus der <netdb.h> C Bibliothek aufgelöst.
+Die verwendung der asio Bibliothek war in diesem Projekt leider nicht möglich, daher werden die Domains mit Funktionen aus der netdb.h C Bibliothek aufgelöst.
 
 \begin{code}
 \begin{minted}{cpp}
@@ -109,8 +129,6 @@ int POP3client::resolve() {
 \caption{Auflösen einer Domain ohne asio}
 \label{resolve_domain}
 \end{code}
-
-\newpage
 
 \subsubsection{Erstellen einer C Socket}
 
@@ -196,7 +214,7 @@ string POP3client::read_to_end(){
 }
 \end{minted}
 \caption{Funktion, die aus der Socket liest, bis der Key erreicht wird}
-\label{create_gnutls}
+\label{read_to_end}
 \end{code}
 
 \subsubsection{Schreiben in die Socket}
@@ -222,16 +240,14 @@ int POP3client::write(std::string msg){
 }
 \end{minted}
 \caption{Funktion, die in die Socket schreibt}
-\label{create_gnutls}
+\label{write_in_socket}
 \end{code}
 
 \subsection{Protobuf und gRPC}
 \subsubsection{Protobuf}
-Protobuf\cite{protobuf} wurde implementiert um die verwendung von gRPC für den austausch von Daten zu ermöglichen.
-% TODO erläutern
+Protobuf\cite{protobuf} wurde implementiert um die verwendung von gRPC für den Austausch von Daten zu ermöglichen.
 \begin{code}
   \begin{minted}{c++}
-
 message MailMeta {
   optional int32 message_id = 1;
   optional string from = 2;
@@ -242,9 +258,9 @@ message MailMeta {
 message MailList {
   repeated MailMeta mails = 1;
 }
-
   \end{minted}
   \caption{Protobuf Klassen für E-Mail Metadatan und eine Liste von diesen}
+  \label{proto}
 \end{code}
 
 \subsubsection{gRPC}
@@ -263,9 +279,10 @@ service POP3CS {
 }
   \end{minted}
   \caption{gRPC Routen}
+  \label{grpc}
 \end{code}
 
-Die "POP3CSClient" Klasse benutzt den gRPC Client, um Daten des POP3 Servers über die "POP3CSImplementation" Klasse anzufragen.
+Die "POP3CSClient" Klasse benutzt einen gRPC Client, um Daten des POP3 Servers über die "POP3CSImplementation" Klasse anzufragen.
 
 \subsection{Externe Bibliotheken}
 \label{extBib}
@@ -301,7 +318,7 @@ auto console = spdlog::stdout_color_mt("console");
 auto logger = spdlog::basic_logger_mt("logger", "logs/basic-log.txt");
 \end{minted}
 \caption{Erstellen von spdlog Console und File Sinks}
-\label{create_gnutls}
+\label{spdlog_code}
 \end{code}
 
 \subsubsection{JSON}
@@ -347,20 +364,9 @@ Benutzerdefinierten Port angeben.
 \paragraph{-j,--json}
 Configuration aus einem JSON File lesen
 
-\subsubsection{Befehle}
-\label{commands_lab}
-\paragraph{-d,--download}
-Einzelne E-Mail herunterladen und die Verbindung schließen.
-
-\paragraph{-r,--remove}
-Einzelne E-Mail löschen und die Verbindung schließen.
-
-\paragraph{-l,--list}
-E-Mails auflisten und die Verbindung schließen.
-
 \subsubsection{Interaktive Eingabe von Befehlen}
 \paragraph{-i,--interactive}
-Interaktive Eingabe von Befehlen aktivieren. Erlaubt es dem User alle Befehle aus Sektion \ref{commands_lab} zu verwenden.
+Interaktive Eingabe von Befehlen aktivieren.
 
 \begin{code}
   \begin{minted}{text}
@@ -372,7 +378,7 @@ ls / list <amount>          - list amount of mails
 exit                        - disconnects the session
 help                        - displays this message
   \end{minted}
-%  \caption{Ausgabe des help Befehls des Interaktiven Clients}
+  \caption{Ausgabe des help Befehls des Interaktiven Clients}
 \end{code}
 
 \newpage

@@ -22,6 +22,7 @@
 - Add comments to every function
 - Add comments to classes
 - Delete unused code & Debug
+- Add Classes to Documentation
 *** Changed
 - Split ProtoInterface.h into seperate Files
 - Update render.html File

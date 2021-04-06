@@ -29,8 +29,6 @@ catnr:  03
 // POP3client class, interacts with the POP3 Server
 class POP3client{
     private:
-        std::string end_signal = ".\r";
-
         std::string hostname;
         u_int16_t port;
 
