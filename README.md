@@ -1,6 +1,7 @@
 <div align="center">
-    <h1>POP3 Client</h1>
+    <h1>POP3 Client (29) </h1>
     <h3>fischer_project_2</h3>
+    <h5>David Fischer, 5CHIF (03)</h5>
 </div>
 
 <div align="center">
@@ -12,7 +13,7 @@
 </div>
 
 ## 💦 Short Summary
-The goal of this assignment was the creation of a POP3 Client, including support for GnuTLS. The program was implemented using Protobuf as well as gRPC.
+The goal of this assignment was the creation of a POP3 Client, including support for GnuTLS. The project was implemented using Protobuf, as well as gRPC.
 
 ```
   _           _     _     _        0  
@@ -43,6 +44,8 @@ Options:
 
 * [Protobuf](https://developers.google.com/protocol-buffers)
 * [gRPC](https://grpc.io/)
+
+- - -
 
 * [CLI11](https://github.com/CLIUtils/CLI11)
 * [JSON for Modern C++](https://github.com/nlohmann/json)
