@@ -2,6 +2,9 @@
 ** [Unreleased]
 *** Added
 - Create repository
+** [0.0.7] - 2020-04-05
+*** Added
+- Correct grammatical errors in Documentation 
 ** [0.0.6] - 2020-03-29
 *** Added
 - POP3CSImplementation.h & POP3CSClient.h Files
