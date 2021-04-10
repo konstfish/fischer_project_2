@@ -11,7 +11,7 @@
 
 </div>
 
-##💦 Short Summary
+## 💦 Short Summary
 The goal of this assignment was the creation of a POP3 Client, including support for GnuTLS. The program was implemented using Protobuf as well as gRPC.
 
 ```
@@ -22,7 +22,7 @@ The goal of this assignment was the creation of a POP3 Client, including support
   |_.__/ \__,_|_.__/|_.__/|_|\___|    o         
 ```
 
-##📈 Usage
+## 📈 Usage
 
 ```
 POP3 Client
@@ -39,7 +39,7 @@ Options:
   -i,--interactive            Enable Interactive Shell
 ```
 
-##📝 Requirements
+## 📝 Requirements
 
 * [Protobuf](https://developers.google.com/protocol-buffers)
 * [gRPC](https://grpc.io/)
@@ -51,11 +51,11 @@ Options:
 * [httplib](https://github.com/yhirose/cpp-httplib)
 * [inja](https://github.com/pantor/inja)
 
-##🔨 Compile
+## 🔨 Compile
 
 `mkdir -p build && cd build && meson .. && ninja`
 
-##🖥️ Example Interactive Client
+## 🖥️ Example Interactive Client
 ```
 fischer_project_2/build on  master [!] at ☸️  docker-desktop took 23s
 ➜ ./bubble -j ../config.json -i
@@ -91,7 +91,7 @@ bubble> exit
 [2021-03-14 20:24:54.536] [console] [info] Successfully Quit Session!
 ```
 
-##🌐 Web Interface
+## 🌐 Web Interface
 
 ![web interface](/doc/images/web_interface.png?raw=true)
 
