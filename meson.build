@@ -1,16 +1,10 @@
 # uncomment as necessary
 project('bubble', 'cpp',
         license : ['Boost'],
-        version : '0.0.5',
+        version : '1.0.0',
         default_options : ['cpp_std=c++17', 'warning_level=3', 'werror=true'])
 
 gnutls_dep = dependency('gnutls')
-
-# begin asio: https://think-async.com/Asio/
-#add_global_arguments('-I' + get_option('asio_include_dir'), language : 'cpp')
-#add_global_arguments('-DASIO_STANDALONE', language : 'cpp')
-#add_global_arguments('-DASIO_NO_DEPRECATED', language : 'cpp')
-# end asio
 
 # CLI11: https://github.com/CLIUtils/CLI11
 add_global_arguments('-I' + get_option('cli11_include_dir'), language : 'cpp')
@@ -24,8 +18,7 @@ add_global_arguments('-I' + get_option('json_include_dir'), language : 'cpp')
 # tabluate
 add_global_arguments('-I' + get_option('tabulate_include_dir'), language : 'cpp')
 
-
-# # begin protobuf: https://developers.google.com/protocol-buffers/
+# # begin protobuf / gRPC
 protoc = find_program('protoc', required : true)
 protobuf_dep = dependency('protobuf', required : true)
 
@@ -54,15 +47,15 @@ grpc_gen = generator(protoc,
 
 generated_pb = gen.process('src/pop3.proto')
 generated_rpc = grpc_gen.process('src/pop3.proto')
-# # end protobuf
+# # end protobuf / gRPC
 
+# # Bubble Executable
 inc_dir = include_directories([ 'include',
                                 get_option('cli11_include_dir'),
                                 get_option('spdlog_include_dir'),
                                 get_option('json_include_dir'),
                                 get_option('tabulate_include_dir')                           
                               ])
-
 
 src = ['src/main.cpp', 'src/POP3client.cpp', 'src/Util.cpp', 'src/Interactive.cpp', 'src/ProtoInterface.cpp', 'src/POP3CSClient.cpp', generated_pb, generated_rpc]
 
@@ -73,7 +66,7 @@ executable('bubble',
           )
 
 
-# http server
+# http server executable
 
 inc_dir_http = include_directories([ 'http_server/include',
                                 get_option('spdlog_include_dir'),
