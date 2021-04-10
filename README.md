@@ -7,11 +7,12 @@
 
 [![License](https://img.shields.io/badge/License-Boost%201.0-blue.svg)](https://www.boost.org/LICENSE_1_0.txt)
 [![time tracker](https://wakatime.com/badge/github/konstfish/fischer_project_2.svg)](https://wakatime.com/badge/github/konstfish/fischer_project_2)
+[![CodeFactor](https://www.codefactor.io/repository/github/konstfish/fischer_project_2/badge?s=c397d4ac5a23901eaf68a5ace37595352a91e3d1)](https://www.codefactor.io/repository/github/konstfish/fischer_project_2)
 
 </div>
 
-## Short Summary
-The goal of this assigment was the creation of a POP3 Client, including support for GnuTLS.
+##💦 Short Summary
+The goal of this assignment was the creation of a POP3 Client, including support for GnuTLS. The program was implemented using Protobuf as well as gRPC.
 
 ```
   _           _     _     _        0  
@@ -21,7 +22,7 @@ The goal of this assigment was the creation of a POP3 Client, including support 
   |_.__/ \__,_|_.__/|_.__/|_|\___|    o         
 ```
 
-## Usage
+##📈 Usage
 
 ```
 POP3 Client
@@ -35,18 +36,26 @@ Options:
   -t,--tls                    Connect using TLS
   --port INT                  Specify custom port
   -j,--json TEXT              Relative path to JSON file containing the Config
-  -d,--download INT           Download Email with specified ID
-  -r,--remove INT             Delete Email with specified ID
-  -l,--list INT:Range of Emails limited to sensible values
-                              List
   -i,--interactive            Enable Interactive Shell
 ```
 
-## Compile
+##📝 Requirements
 
-`mkdir build && cd build && meson .. && ninja`
+* [Protobuf](https://developers.google.com/protocol-buffers)
+* [gRPC](https://grpc.io/)
 
-## Example Interactive Client
+* [CLI11](https://github.com/CLIUtils/CLI11)
+* [JSON for Modern C++](https://github.com/nlohmann/json)
+* [spdlog](https://github.com/gabime/spdlog)
+* [tabulate](https://github.com/p-ranav/tabulate)
+* [httplib](https://github.com/yhirose/cpp-httplib)
+* [inja](https://github.com/pantor/inja)
+
+##🔨 Compile
+
+`mkdir -p build && cd build && meson .. && ninja`
+
+##🖥️ Example Interactive Client
 ```
 fischer_project_2/build on  master [!] at ☸️  docker-desktop took 23s
 ➜ ./bubble -j ../config.json -i
@@ -82,7 +91,7 @@ bubble> exit
 [2021-03-14 20:24:54.536] [console] [info] Successfully Quit Session!
 ```
 
-## Web Interface
+##🌐 Web Interface
 
 ![web interface](/doc/images/web_interface.png?raw=true)
 

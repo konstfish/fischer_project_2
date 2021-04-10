@@ -2,6 +2,7 @@
 ** [Unreleased]
 *** Added
 - Create repository
+- Update README.md
 ** [0.0.7] - 2020-04-05
 *** Added
 - Correct grammatical errors in Documentation 
